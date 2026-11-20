@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>여기맞캠? 프로토타입</title>
 <style>
-:root{--main:#14a38b;--main-strong:#0e7f6c;--main-soft:#e6f7f3;--accent:#ff9f6e;--accent-soft:#fff1e8;--accent-ink:#9a4a1c;--me:#2f6fe4;--bg:#ffffff;--text:#1d2b28;--sub:#5b6b67;--line:#e3ebe8;--warn-bg:#fff6d9;--warn-text:#6b4b00;--radius:20px}
+:root{--main:#14a38b;--main-strong:#0e7f6c;--main-soft:#e6f7f3;--accent:#ff9f6e;--accent-soft:#fff1e8;--accent-ink:#9a4a1c;--me:#2f6fe4;--bg:#F0FFF0;--card:#FFF5EE;--text:#1d2b28;--sub:#5b6b67;--line:#d8eedb;--warn-bg:#fff6d9;--warn-text:#6b4b00;--radius:28px}
 *{box-sizing:border-box}body{margin:0;background:#eceef1;font-family:system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--text)}
 .device{width:390px;max-width:100%;min-height:780px;margin:24px auto;background:var(--bg);border-radius:28px;box-shadow:0 8px 30px rgba(0,0,0,.12);overflow:hidden;position:relative}
 .screen{display:none;min-height:780px}.screen.on{display:block}
@@ -66,6 +66,42 @@ a{color:inherit}
 .where.nb{background:var(--accent-soft);color:var(--accent-ink)}
 .where.ok{background:var(--main-soft);color:var(--main-strong)}
 .btns{display:flex;flex-direction:column;gap:8px}
+/* 귀여운 테마: 연두빛 화면(#F0FFF0) 위에 살구빛 카드(#FFF5EE), 동글동글한 모양 */
+body{background:#FFF5EE}
+.device{border:6px solid #fff;box-shadow:0 14px 40px rgba(255,159,110,.25),0 2px 0 #ffe2d0;border-radius:40px}
+.status{padding-top:14px}
+.topbar .title{display:inline-flex;align-items:center;gap:6px;font-size:23px;color:var(--main-strong)}
+.topbar .title::before{content:"";width:30px;height:30px;border-radius:50% 50% 50% 6px;transform:rotate(-45deg);background:var(--accent);box-shadow:inset 0 0 0 8px var(--accent),inset 0 0 0 30px #fff}
+.topbar .back{background:var(--card);border-radius:999px;padding:0 16px 0 12px;box-shadow:0 3px 0 #ffe2d0}
+.topbar .meta{background:var(--card);border-radius:999px;padding:0 12px;box-shadow:0 3px 0 #ffe2d0}
+.search{border:2.5px solid var(--main);border-radius:999px;background:#fff;box-shadow:0 4px 0 #c8efe2;padding-left:18px}
+.search .go{border-radius:999px;padding:0 14px;box-shadow:0 3px 0 #0a5f51}
+.chip{background:var(--card);border:2px solid #ffe2d0;font-weight:600}
+.chip.on{background:#fff;border-color:var(--main);box-shadow:0 3px 0 #c8efe2}
+.map{background:#e2f7e6;border-radius:32px;margin:10px 12px 0;min-height:290px}
+.mapbtn{border-radius:50%;border:2px solid #fff;box-shadow:0 3px 0 #c8efe2}
+.maplabel{border-radius:999px;padding:3px 9px;left:14px;top:14px;bottom:auto}
+.sheet{background:var(--card);margin-top:-26px;border-radius:32px 32px 0 0;box-shadow:0 -6px 20px rgba(255,159,110,.15)}
+.grab{background:#ffd8c2;width:46px;height:6px}
+.rows{border:2px solid #ffe2d0;border-radius:22px;background:#fff}
+.row{background:#fff;border-top:2px dashed #ffe9dc}
+.btn{border-radius:999px;box-shadow:0 5px 0 #0a5f51;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #0a5f51}
+.btn.ghost{background:#fff;box-shadow:0 5px 0 #c8efe2}
+.btn.ghost:active{box-shadow:0 2px 0 #c8efe2}
+.hint{border-radius:22px}
+.dim{background:rgba(29,43,40,.35)}
+.dialog{background:var(--card);border-radius:36px 36px 0 0}
+.dialog h3::before{content:"🤔 "}
+.alt{background:transparent;border-top:2px dashed #ffe2d0}
+.alt button,.alt a{background:#fff;border:1.5px solid #ffe2d0}
+.dest .tag{box-shadow:0 2px 0 #f08350}
+.where{border-radius:22px}
+.where.no,.where.ok{background:#fff;border:2px solid #c8efe2}
+.where.nb{background:#fff;border:2px solid #ffd8c2}
+.up{background:#fff;border:1.5px solid var(--warn-bg)}
+#toast{background:var(--main-strong);border-radius:999px;box-shadow:0 4px 0 #0a5f51}
+#idx{border-radius:999px;background:#fff;border:2px solid #ffe2d0}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -89,11 +125,12 @@ a{color:inherit}
     <svg viewBox="0 0 390 320" role="img" aria-label="캠퍼스 안내도와 내 위치">
       <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
       <path d="M120 330 C140 280 170 250 210 200 S250 90 240 -10" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+      <g fill="#a8e2b8"><circle cx="150" cy="60" r="9"/><circle cx="166" cy="70" r="7"/><circle cx="350" cy="250" r="9"/><circle cx="20" cy="140" r="8"/><circle cx="215" cy="290" r="7"/></g>
       <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
-        <rect x="40" y="70" width="80" height="54" rx="14" fill="#cfeee6"/><text x="80" y="102">13</text>
-        <rect x="270" y="30" width="86" height="60" rx="14" fill="#cfeee6"/><text x="313" y="65">26</text>
-        <rect x="262" y="160" width="74" height="54" rx="14" fill="#cfeee6"/><text x="299" y="192">15</text>
-        <rect x="30" y="170" width="70" height="44" rx="14" fill="#d9efe9"/><text x="65" y="197">정문</text>
+        <rect x="40" y="70" width="80" height="54" rx="22" fill="#c9f0d4"/><text x="80" y="102">13</text>
+        <rect x="270" y="30" width="86" height="60" rx="22" fill="#c9f0d4"/><text x="313" y="65">26</text>
+        <rect x="262" y="160" width="74" height="54" rx="22" fill="#c9f0d4"/><text x="299" y="192">15</text>
+        <rect x="30" y="170" width="70" height="44" rx="22" fill="#ffe2d0"/><text x="65" y="197">정문</text>
       </g>
       <g data-v-svg="me">
         <circle cx="168" cy="236" r="26" fill="#2f6fe4" fill-opacity=".18"/>
@@ -146,13 +183,14 @@ a{color:inherit}
     <svg viewBox="0 0 390 320" role="img" aria-label="목적지 26번 건물과 내 위치">
       <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
       <path d="M120 330 C140 280 170 250 210 200 S250 90 240 -10" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+      <g fill="#a8e2b8"><circle cx="150" cy="60" r="9"/><circle cx="166" cy="70" r="7"/><circle cx="350" cy="250" r="9"/><circle cx="20" cy="140" r="8"/><circle cx="215" cy="290" r="7"/></g>
       <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
-        <rect x="40" y="70" width="80" height="54" rx="14" fill="#cfeee6"/><text x="80" y="102">13</text>
-        <rect x="262" y="160" width="74" height="54" rx="14" fill="#cfeee6"/><text x="299" y="192">15</text>
-        <rect x="30" y="170" width="70" height="44" rx="14" fill="#d9efe9"/><text x="65" y="197">정문</text>
+        <rect x="40" y="70" width="80" height="54" rx="22" fill="#c9f0d4"/><text x="80" y="102">13</text>
+        <rect x="262" y="160" width="74" height="54" rx="22" fill="#c9f0d4"/><text x="299" y="192">15</text>
+        <rect x="30" y="170" width="70" height="44" rx="22" fill="#ffe2d0"/><text x="65" y="197">정문</text>
       </g>
       <path d="M168 236 C200 215 215 190 240 150 S285 105 300 92" fill="none" stroke="#14a38b" stroke-width="5" stroke-dasharray="2 10" stroke-linecap="round"/>
-      <rect x="266" y="26" width="94" height="66" rx="16" fill="#ff9f6e"/>
+      <rect x="266" y="26" width="94" height="66" rx="24" fill="#ff9f6e"/>
       <text x="313" y="56" text-anchor="middle" font-size="15" font-weight="800" fill="#1d2b28">26</text>
       <text x="313" y="76" text-anchor="middle" font-size="12" font-weight="800" fill="#1d2b28">목적지</text>
       <circle cx="168" cy="236" r="22" fill="#2f6fe4" fill-opacity=".18"/>
