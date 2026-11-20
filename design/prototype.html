@@ -48,7 +48,6 @@ a{color:inherit}
 .alt span{font-size:11px;color:var(--sub);width:100%}
 .alt button,.alt a{font-size:11px;min-height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
 .alt .on{border-color:var(--main);color:var(--main-strong);font-weight:700}
-[data-v]{display:none}
 /* 2.1 내 위치 지도 */
 .pinmode{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
 .pinmode b{background:var(--accent);color:var(--text);font-size:13px;padding:6px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
@@ -112,6 +111,17 @@ body{background:#FFF5EE}
 .remain{display:flex;justify-content:space-between;align-items:baseline}.remain b{font-size:20px;font-weight:800}.remain span{font-size:14px;color:var(--sub);font-weight:700}
 .prog{height:12px;border-radius:999px;background:#fff;border:2px solid #c8efe2;overflow:hidden}.prog i{display:block;height:100%;width:42%;background:var(--main);border-radius:999px}
 .next{font-size:14px;line-height:1.5;background:#fff;border-radius:18px;padding:10px 12px;border:2px dashed #ffd8c2}.next b{color:var(--main-strong)}
+/* 2.2 층별 지도 */
+.floors{display:flex;gap:6px}
+.floors button{position:relative;flex:1;min-height:44px;border-radius:999px;border:2px solid #ffe2d0;background:var(--card);font-weight:800;font-size:14px;cursor:pointer}
+.floors button.on{background:var(--main-strong);border-color:var(--main-strong);color:#fff;box-shadow:0 3px 0 #0a5f51}
+.floors .now{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:800;background:var(--me);color:#fff;border-radius:999px;padding:1px 6px;white-space:nowrap}
+.plan{position:relative;margin:10px 12px 0;background:#fff;border-radius:28px;border:2px solid #c8efe2;min-height:300px;flex:1;overflow:hidden}
+.plan svg{position:absolute;inset:0;width:100%;height:100%}
+.plan .fl{position:absolute;left:14px;top:12px;font-size:13px;font-weight:800;color:var(--main-strong);background:var(--main-soft);border-radius:999px;padding:3px 10px}
+.warnc{background:var(--warn-bg);color:var(--warn-text);border-radius:20px;padding:12px 14px;font-size:14px;line-height:1.5;border:2px solid #f5dc8f}
+.room{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border-radius:20px;padding:12px 14px;border:2px solid #c8efe2;text-decoration:none;min-height:56px}
+.room b{font-size:16px}.room small{display:block;font-size:12px;color:var(--sub);margin-top:2px}.room .go{font-size:13px;font-weight:800;color:var(--accent-ink);white-space:nowrap}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -154,11 +164,11 @@ body{background:#FFF5EE}
   </div>
   <div class="sheet">
     <div class="grab"></div>
-    <div data-v="pin" style="flex-direction:column;gap:10px">
+    <div data-v="pin" style="display:flex;flex-direction:column;gap:10px">
       <div class="label">지도를 움직여 출발할 곳에 핀을 맞춰 주세요</div>
       <button class="btn tap" onclick="toast('출발 위치를 정했어요');setState(this,'normal')">여기서 출발</button>
     </div>
-    <div data-v="list" style="flex-direction:column;gap:10px">
+    <div data-v="list" style="display:flex;flex-direction:column;gap:10px">
       <div class="label">최근 검색</div>
       <div class="rows">
         <a class="row tap" href="#1.1"><b>26번 건물 401호</b><span class="r">4층</span></a>
@@ -290,6 +300,60 @@ body{background:#FFF5EE}
     <button onclick="toast('건물 입구에 도착했어요. 층별 지도로 바뀌어요');setTimeout(()=>location.hash='#2.2',900)">입구 도착: 자동 전환</button>
   </div>
 </section>
+<section class="screen" id="2.2" data-name="건물 상세 / 층별 지도" data-state="normal">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="topbar">
+    <a class="back tap" href="#2.0" aria-label="뒤로, 경로 안내">‹ 26번 건물 도착</a>
+    <span class="meta">층별 안내</span>
+  </div>
+  <div class="pad">
+    <div class="floors" role="tablist" aria-label="층 고르기">
+      <button class="tap" onclick="floorPick(this,'x','B1')">B1</button>
+      <button class="tap" onclick="floorPick(this,'x','1F')">1F<span class="now" data-v="now1">지금</span></button>
+      <button class="tap" onclick="floorPick(this,'x','2F')">2F</button>
+      <button class="tap" onclick="floorPick(this,'3','3F')">3F<span class="now" data-v="now3">지금</span></button>
+      <button class="tap on" onclick="floorPick(this,'4','4F')">4F<span class="now" data-v="now4">지금</span></button>
+    </div>
+  </div>
+  <div class="plan">
+    <span class="fl">4F 평면도</span>
+    <div data-plan="4" style="position:absolute;inset:0"><svg viewBox="0 0 300 300" role="img" aria-label="4층 평면도, 401호 위치">
+        <rect x="24" y="30" width="110" height="250" rx="22" fill="#F0FFF0" stroke="#c8efe2" stroke-width="3"/>
+        <rect x="166" y="30" width="110" height="250" rx="22" fill="#F0FFF0" stroke="#c8efe2" stroke-width="3"/>
+        <rect x="66" y="44" width="26" height="222" rx="13" fill="#e2f7e6"/><text x="79" y="160" text-anchor="middle" font-size="11" fill="#5b6b67" writing-mode="tb">복도</text>
+        <g fill="#fff" stroke="#d8eedb" stroke-width="2"><rect x="32" y="48" width="28" height="44" rx="10"/><rect x="32" y="100" width="28" height="44" rx="10"/><rect x="98" y="48" width="30" height="64" rx="10"/><rect x="176" y="140" width="90" height="60" rx="14"/></g>
+        <rect x="176" y="48" width="90" height="80" rx="18" fill="#ff9f6e"/><text x="221" y="86" text-anchor="middle" font-size="17" font-weight="800" fill="#1d2b28">401호</text><text x="221" y="106" text-anchor="middle" font-size="11" font-weight="800" fill="#1d2b28">목적지</text>
+        <text x="221" y="175" text-anchor="middle" font-size="12" fill="#5b6b67">402호</text>
+        <path d="M134 230 L166 230" stroke="#9a4a1c" stroke-width="3" stroke-dasharray="4 5"/><text x="150" y="222" text-anchor="middle" font-size="10" font-weight="800" fill="#9a4a1c">연결 없음</text>
+        <rect x="96" y="238" width="34" height="30" rx="8" fill="#fff6d9" stroke="#f5dc8f" stroke-width="2"/><text x="113" y="257" text-anchor="middle" font-size="10" font-weight="800" fill="#6b4b00">계단</text>
+        <g data-v-svg="now4"><circle cx="221" cy="138" r="9" fill="#2f6fe4" stroke="#fff" stroke-width="3"/></g>
+      </svg></div>
+    <div data-plan="3" style="position:absolute;inset:0;display:none"><svg viewBox="0 0 300 300" role="img" aria-label="3층 평면도, 연결다리 위치">
+        <rect x="24" y="30" width="110" height="250" rx="22" fill="#F0FFF0" stroke="#c8efe2" stroke-width="3"/>
+        <rect x="166" y="30" width="110" height="250" rx="22" fill="#F0FFF0" stroke="#c8efe2" stroke-width="3"/>
+        <rect x="66" y="44" width="26" height="222" rx="13" fill="#e2f7e6"/>
+        <rect x="130" y="196" width="40" height="34" rx="10" fill="#14a38b"/><text x="150" y="190" text-anchor="middle" font-size="11" font-weight="800" fill="#0e7f6c">연결다리</text>
+        <path d="M79 213 L221 213 L221 252" fill="none" stroke="#14a38b" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 9"/>
+        <rect x="206" y="238" width="34" height="30" rx="8" fill="#fff6d9" stroke="#f5dc8f" stroke-width="2"/><text x="223" y="257" text-anchor="middle" font-size="10" font-weight="800" fill="#6b4b00">계단</text>
+        <text x="79" y="70" text-anchor="middle" font-size="12" font-weight="800" fill="#5b6b67">25번 건물</text><text x="221" y="70" text-anchor="middle" font-size="12" font-weight="800" fill="#5b6b67">26번 건물</text>
+        <circle cx="79" cy="213" r="9" fill="#2f6fe4" stroke="#fff" stroke-width="3"/>
+      </svg></div>
+    <div data-plan="x" style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:30px;font-size:14px;color:var(--sub);line-height:1.6"><p style="margin:0">이 층에는 목적지가 없어요.<br><b style="color:var(--text)">3층 연결다리</b>로 건너간 뒤 계단으로 4층에 올라가세요.</p></div>
+    <span class="maplabel" style="top:auto;bottom:12px">평면도 자리 (예시)</span>
+  </div>
+  <div class="pad" style="padding:12px 16px 14px">
+    <div class="warnc" data-v="w4">⚠️ 4층에는 연결다리가 없어요. <b>3층에서 연결다리로 건너간 뒤</b> 계단으로 올라가세요.</div>
+    <div class="warnc" data-v="nb">🌉 강의실은 붙어 있는 <b>26번 건물</b>에 있어요. 지금 있는 <b>25번 건물 3층 연결다리</b>로 건너가세요.</div>
+    <a class="room tap" href="#3.0"><div><b>401호 · 4층 · 오른쪽 동 끝</b><small>정보 확인일 2026. 11 · 운영진 검수</small></div><span class="go">정보가 달라요?</span></a>
+    <a class="btn tap" href="#2.4" data-v="arr">도착 확인</a>
+  </div>
+  <div class="alt"><span>갈림길 모습 보기</span>
+    <button class="on" onclick="setState(this,'normal')">기본 (지금 1층)</button>
+    <button onclick="setState(this,'neighbor');floorPick(this.closest('.screen').querySelectorAll('.floors button')[3],'3','3F')">옆 건물 연결 통로</button>
+    <button onclick="setState(this,'arrive')">강의실 앞: 자동 전환 안 됨</button>
+    <button onclick="toast('강의실에 도착했어요!');setTimeout(()=>location.hash='#2.4',900)">강의실 앞: 자동 전환</button>
+  </div>
+</section>
 <!-- 화면 끝 -->
 </div>
 <div id="toast"></div>
@@ -302,10 +366,11 @@ function show(){const id=decodeURIComponent(location.hash.slice(1));const t=S.fi
 addEventListener("hashchange",show);show();
 /* 공통: 화면 안의 갈림길 모습 바꾸기. data-v 는 그 모습에서만 보임 */
 /* 화면별 갈림길 모습: VIEWS["화면ID"][모습] = 그 모습에서 보일 data-v 목록 */
-const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]}};
+const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]},"2.2":{normal:["w4","now1"],neighbor:["nb","now3"],arrive:["w4","now4","arr"]}};
 function setState(el,st){const s=el.closest(".screen");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}
-function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"flex":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":"";s.querySelectorAll('[data-v-svg]:not([data-v-svg="me"])').forEach(g=>g.style.display=on.includes(g.dataset.vSvg)?"":"none")}
+function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":"";s.querySelectorAll('[data-v-svg]:not([data-v-svg="me"])').forEach(g=>g.style.display=on.includes(g.dataset.vSvg)?"":"none")}
 S.forEach(s=>{if(s.dataset.state)paint(s)});
+function floorPick(b,k,label){const sc=b.closest(".screen");sc.querySelectorAll(".floors button").forEach(x=>x.classList.toggle("on",x===b));sc.querySelectorAll("[data-plan]").forEach(d=>d.style.display=d.dataset.plan===k?(k==="x"?"flex":"block"):"none");sc.querySelector(".plan .fl").textContent=label+" 평면도"}
 function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b))}
 function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}
 </script></body></html>
