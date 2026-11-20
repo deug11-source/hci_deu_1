@@ -10,7 +10,6 @@ flowchart LR
   subgraph G1["검색"]
     S1_1["목적지 확인 1.1"]
     N_RES["검색 결과 선택 (새 화면)"]
-    N_CONF["이 강의실이 맞나요 확인 (새 화면)"]
   end
   subgraph G2["길 안내"]
     S2_1["내 위치 지도 2.1"]
@@ -35,9 +34,8 @@ flowchart LR
   S1_1 -.->|"잘못 고름 뒤로 또는 취소"| S2_1
   S2_1 -.->|"결과 여러 개"| N_RES
   N_RES -.->|"결과 선택"| S1_1
-  S2_1 -.->|"지하 표기 헷갈림"| N_CONF
-  N_CONF -.->|"맞아요"| S1_1
-  N_CONF -.->|"아니에요"| N_RES
+  S2_1 -.->|"지하 표기 헷갈림 안내 창"| S1_1
+  S1_1 -.->|"아니에요 두 후보 보기"| N_RES
   S2_1 -.->|"위치를 못 잡음"| N_PERM
   N_PERM -.->|"권한 켬"| S2_1
   N_PERM -.->|"권한 안 켬"| N_START
@@ -53,7 +51,7 @@ flowchart LR
   classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
   class S1_1,S2_1,S2_0,S2_2,S3_0 has
   class S2_3 none
-  class N_RES,N_CONF,N_PERM,N_START,N_ARR new
+  class N_RES,N_PERM,N_START,N_ARR new
 </pre></div>
 <h2>플로우 1: 처음 가는 강의실 찾기 김서윤 (핵심)</h2>
 <div class="box"><pre class="mermaid">
@@ -68,11 +66,10 @@ flowchart LR
   S2_1 -.->|"결과 없음 다시 검색 안내"| S2_1
   S2_1 -.->|"결과 여러 개"| N_RES["검색 결과 선택 (새 화면)"]
   N_RES -.->|"결과 선택"| S1_1
-  S2_1 -.->|"지하 표기 헷갈림"| N_CONF["이 강의실이 맞나요 확인 (새 화면)"]
-  N_CONF -.->|"맞아요"| S1_1
+  S2_1 -.->|"지하 표기 헷갈림 이 강의실이 맞나요 안내 창"| S1_1
   S2_1 -.->|"위치를 못 잡음"| N_PERM["위치 권한 켜기 안내 (새 화면)"]
   N_PERM -.->|"권한 켬"| S2_1
-  N_CONF -.->|"아니에요 두 후보 보기"| N_RES
+  S1_1 -.->|"아니에요 두 후보 보기"| N_RES
   N_PERM -.->|"권한 안 켬"| N_START["출발 위치 직접 고르기 (새 화면)"]
   N_START -.->|"지도에서 출발 위치 선택"| S2_1
   S1_1 -.->|"지금 건물이 목적지"| S2_2
@@ -87,7 +84,7 @@ flowchart LR
   classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
   classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
   class S2_1,S1_1,S2_0,S2_2,S3_0 has
-  class N_ARR,N_RES,N_CONF,N_PERM,N_START new
+  class N_ARR,N_RES,N_PERM,N_START new
 </pre></div>
 <h2>플로우 2: 건물 안에서 강의실 찾기 이도현</h2>
 <p class="lg">검색 단계의 갈림길(결과 없음, 결과 여러 개, 지하 표기 헷갈림, 위치를 못 잡음)은 플로우 1과 같아서 생략했어요.</p>
