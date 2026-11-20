@@ -21,6 +21,9 @@ flowchart LR
   N_CONF -.->|"맞아요"| S1_1
   S2_1 -.->|"위치를 못 잡음"| N_PERM["위치 권한 켜기 안내 (새 화면)"]
   N_PERM -.->|"권한 켬"| S2_1
+  N_CONF -.->|"아니에요 두 후보 보기"| N_RES
+  N_PERM -.->|"권한 안 켬"| N_START["출발 위치 직접 고르기 (새 화면)"]
+  N_START -.->|"지도에서 출발 위치 선택"| S2_1
   S1_1 -.->|"지금 건물이 목적지"| S2_2
   S1_1 -.->|"잘못 고름 뒤로 또는 취소"| S2_1
   S2_0 -.->|"경로 이탈 방향 혼동 위치 튐 잘못 들어간 건물 다시 안내"| S2_0
@@ -33,7 +36,7 @@ flowchart LR
   classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
   classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
   class S2_1,S1_1,S2_0,S2_2,S3_0 has
-  class N_ARR,N_RES,N_CONF,N_PERM new
+  class N_ARR,N_RES,N_CONF,N_PERM,N_START new
 </pre></div>
 <script>mermaid.initialize({startOnLoad:true,theme:"neutral",flowchart:{htmlLabels:true}})</script>
 </body></html>
