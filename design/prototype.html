@@ -102,6 +102,16 @@ body{background:#FFF5EE}
 .up{background:#fff;border:1.5px solid var(--warn-bg)}
 #toast{background:var(--main-strong);border-radius:999px;box-shadow:0 4px 0 #0a5f51}
 #idx{border-radius:999px;background:#fff;border:2px solid #ffe2d0}
+/* 2.0 경로 안내 */
+.navb{position:relative;z-index:3;margin:4px 12px 0;background:var(--main-strong);color:#fff;border-radius:26px;padding:14px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 5px 0 #0a5f51}
+.navb .ar{flex:none;width:52px;height:52px;border-radius:50%;background:#fff;color:var(--main-strong);font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.navb .t{font-size:18px;font-weight:800;line-height:1.3}.navb .d{font-size:13px;opacity:.95;margin-top:2px}
+.navb.sc{background:#fff;color:var(--text);border:3px solid var(--accent);box-shadow:0 5px 0 #f3b48f}.navb.sc .ar{background:var(--accent);color:var(--text)}
+.navb.wa{background:var(--accent-soft);color:var(--accent-ink);border:3px solid var(--accent);box-shadow:0 5px 0 #f3b48f}.navb.wa .ar{background:var(--accent);color:var(--text)}
+.navb .mini{margin-left:auto;flex:none;min-height:44px;border-radius:999px;border:0;background:#fff;color:var(--main-strong);font-weight:800;padding:0 12px;box-shadow:0 3px 0 #c8efe2;cursor:pointer}
+.remain{display:flex;justify-content:space-between;align-items:baseline}.remain b{font-size:20px;font-weight:800}.remain span{font-size:14px;color:var(--sub);font-weight:700}
+.prog{height:12px;border-radius:999px;background:#fff;border:2px solid #c8efe2;overflow:hidden}.prog i{display:block;height:100%;width:42%;background:var(--main);border-radius:999px}
+.next{font-size:14px;line-height:1.5;background:#fff;border-radius:18px;padding:10px 12px;border:2px dashed #ffd8c2}.next b{color:var(--main-strong)}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -232,6 +242,54 @@ body{background:#FFF5EE}
     <button onclick="setState(this,'confirm')">지하 표기 헷갈림</button>
   </div>
 </section>
+<section class="screen" id="2.0" data-name="경로 안내" data-state="normal">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="navb" data-v="go"><span class="ar">↗</span><div><div class="t">로터리에서 오른쪽 오르막길</div><div class="d">15번 건물 쪽으로 · 120 m</div></div></div>
+  <div class="navb sc" data-v="sc"><span class="ar">🏫</span><div><div class="t">15번 건물 2층 통로로 건너가세요</div><div class="d">실내 지름길 · 바깥길보다 60 m 짧아요</div></div></div>
+  <div class="navb wa" data-v="off"><span class="ar">↺</span><div><div class="t">경로를 벗어났어요</div><div class="d">새 길을 찾았어요 · 왼쪽으로 돌아가세요</div></div></div>
+  <div class="navb wa" data-v="jump"><span class="ar">📡</span><div><div class="t">위치가 정확하지 않아요</div><div class="d">건물 사이라 위치가 튀고 있어요</div></div><button class="mini tap" onclick="toast('위치를 다시 찾았어요');setState(this,'normal')">다시 찾기</button></div>
+  <div class="navb wa" data-v="wrong"><span class="ar">🙅</span><div><div class="t">여긴 25번 건물이에요</div><div class="d">목적지는 붙어 있는 옆 26번 건물 · 다시 안내할게요</div></div></div>
+  <div class="navb" data-v="ent"><span class="ar">🚪</span><div><div class="t">26번 건물 입구에 도착했어요</div><div class="d">층별 지도로 이어서 안내해요</div></div></div>
+  <div class="map" style="margin-top:-22px">
+    <svg viewBox="0 0 390 320" role="img" aria-label="경로 안내 지도, 내 위치와 바라보는 방향">
+      <g fill="#a8e2b8"><circle cx="150" cy="60" r="9"/><circle cx="166" cy="70" r="7"/><circle cx="350" cy="250" r="9"/><circle cx="20" cy="140" r="8"/></g>
+      <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
+      <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
+        <rect x="40" y="90" width="80" height="54" rx="22" fill="#c9f0d4"/><text x="80" y="122">13</text>
+        <rect x="230" y="150" width="84" height="60" rx="22" fill="#c9f0d4"/><text x="272" y="186">15</text>
+      </g>
+      <rect x="270" y="36" width="94" height="66" rx="24" fill="#ff9f6e"/>
+      <text x="317" y="66" text-anchor="middle" font-size="15" font-weight="800" fill="#1d2b28">26</text>
+      <text x="317" y="86" text-anchor="middle" font-size="12" font-weight="800" fill="#1d2b28">목적지</text>
+      <path d="M120 300 L150 262" fill="none" stroke="#b9c9c4" stroke-width="9" stroke-linecap="round"/>
+      <g data-v-svg="m1"><path d="M150 262 C190 230 230 220 262 205 S300 140 312 104" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/><path d="M150 262 C190 230 230 220 262 205 S300 140 312 104" fill="none" stroke="#14a38b" stroke-width="9" stroke-linecap="round"/></g>
+      <g data-v-svg="m2"><path d="M150 262 C190 230 220 215 245 200" fill="none" stroke="#14a38b" stroke-width="9" stroke-linecap="round"/><path d="M245 200 L290 160" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 9" stroke-linecap="round"/><path d="M290 160 S305 130 312 104" fill="none" stroke="#14a38b" stroke-width="9" stroke-linecap="round"/><rect x="186" y="150" width="64" height="22" rx="11" fill="#fff"/><text x="218" y="166" text-anchor="middle" font-size="11" font-weight="800" fill="#9a4a1c">실내 통로</text></g>
+      <path d="M150 262 L128 214 A48 48 0 0 1 176 216 Z" fill="#2f6fe4" fill-opacity=".28"/>
+      <circle cx="150" cy="262" r="11" fill="#2f6fe4" stroke="#fff" stroke-width="4"/>
+    </svg>
+    <button class="mapbtn tap" style="bottom:40px" aria-label="내 위치로 지도 맞추기" onclick="toast('내 위치로 지도를 맞췄어요')">◎</button>
+    <span class="maplabel" style="top:auto;bottom:40px">캠퍼스 안내도 자리 (예시)</span>
+  </div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="remain" data-v="r1"><b>남은 거리 260 m</b><span>약 5분</span></div>
+    <div class="remain" data-v="r2"><b>남은 거리 300 m</b><span>약 6분</span></div>
+    <div class="remain" data-v="r3"><b>건물 도착!</b><span>강의실까지 4층</span></div>
+    <div class="prog"><i></i></div>
+    <div class="next">다음: <b>13번 건물</b>을 왼쪽에 두고 올라가면 <b>26번 건물</b> 정문</div>
+    <a class="btn tap" href="#2.2" data-v="fl">층별 지도 보기</a>
+    <a class="btn ghost tap" href="#2.2" data-v="fg">층별 지도</a>
+  </div>
+  <div class="alt"><span>갈림길 모습 보기</span>
+    <button class="on" onclick="setState(this,'normal')">기본</button>
+    <button onclick="setState(this,'shortcut')">실내 지름길 구간</button>
+    <button onclick="setState(this,'offroute')">경로를 벗어남</button>
+    <button onclick="setState(this,'jump')">위치가 튐</button>
+    <button onclick="setState(this,'wrong')">잘못 들어간 건물</button>
+    <button onclick="setState(this,'entrance')">입구 도착: 자동 전환 안 됨</button>
+    <button onclick="toast('건물 입구에 도착했어요. 층별 지도로 바뀌어요');setTimeout(()=>location.hash='#2.2',900)">입구 도착: 자동 전환</button>
+  </div>
+</section>
 <!-- 화면 끝 -->
 </div>
 <div id="toast"></div>
@@ -244,9 +302,9 @@ function show(){const id=decodeURIComponent(location.hash.slice(1));const t=S.fi
 addEventListener("hashchange",show);show();
 /* 공통: 화면 안의 갈림길 모습 바꾸기. data-v 는 그 모습에서만 보임 */
 /* 화면별 갈림길 모습: VIEWS["화면ID"][모습] = 그 모습에서 보일 data-v 목록 */
-const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]}};
+const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]}};
 function setState(el,st){const s=el.closest(".screen");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}
-function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"flex":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":""}
+function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"flex":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":"";s.querySelectorAll('[data-v-svg]:not([data-v-svg="me"])').forEach(g=>g.style.display=on.includes(g.dataset.vSvg)?"":"none")}
 S.forEach(s=>{if(s.dataset.state)paint(s)});
 function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b))}
 function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}
