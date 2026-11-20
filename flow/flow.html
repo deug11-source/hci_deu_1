@@ -38,5 +38,27 @@ flowchart LR
   class S2_1,S1_1,S2_0,S2_2,S3_0 has
   class N_ARR,N_RES,N_CONF,N_PERM,N_START new
 </pre></div>
+<h2>플로우 2: 건물 안에서 강의실 찾기 이도현</h2>
+<p class="lg">검색 단계의 갈림길(결과 없음, 결과 여러 개, 지하 표기 헷갈림, 위치를 못 잡음)은 플로우 1과 같아서 생략했어요.</p>
+<div class="box"><pre class="mermaid">
+flowchart LR
+  S2_1["내 위치 지도 2.1"] -->|"검색창에 강의실 호수 입력"| S1_1["목적지 확인 1.1"]
+  S1_1 -->|"지금 이 건물 확인"| S2_2["건물 상세 층별 지도 2.2"]
+  S2_2 -->|"강의실 앞 도착 시 자동 전환"| N_ARR["도착 완료 (새 화면)"]
+  N_ARR -->|"홈으로"| S2_1
+  S1_1 -.->|"강의실이 붙어 있는 옆 건물 연결 통로까지 안내"| S2_2
+  S1_1 -.->|"잘못 고름 뒤로 또는 취소"| S2_1
+  S2_2 -.->|"자동 전환 안 되면 도착 확인"| N_ARR
+  S2_2 -.->|"층이 연결 안 됨 연결된 층 안내"| S2_2
+  S2_2 -.->|"정보가 틀림 제보"| S3_0["정보 안내 3.0"]
+  N_ARR -.->|"정보 확인 제보"| S3_0
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| S2_2
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| N_ARR
+  classDef has fill:#e8f1ff,stroke:#4a7fd6
+  classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
+  classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
+  class S2_1,S1_1,S2_2,S3_0 has
+  class N_ARR new
+</pre></div>
 <script>mermaid.initialize({startOnLoad:true,theme:"neutral",flowchart:{htmlLabels:true}})</script>
 </body></html>
