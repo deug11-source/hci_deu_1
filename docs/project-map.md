@@ -11,7 +11,7 @@
 | 퍼소나 | `최종_페르소나.png` (01 정확한 위치정보 확인형 김서윤, 02 건물 구조 파악형 이도현, 03 주변 단서 활용형 박지민). 기획서 2.2에도 비교표 있음 |
 | 인터뷰, 조사 | `261113.pdf` (P1–P6), `페르소나 인터뷰 P79.pdf` (P7–P9), `persona_interview.md` (P7–P9를 옮긴 글). 참여자별 요약은 기획서 부록 |
 | 메뉴 구조 | 따로 없음. 기획서 6.1 "화면 목록"과 화면 흐름을 메뉴 구조로 씀 |
-| 와이어프레임 | `wireframe.html` (현재 버전, 화면 5개), `campus_map.webp` (와이어프레임에 쓰는 캠퍼스 안내도). 기획서 6.2가 가리키는 `wireframes/01_home.png` ~ `06_info.png` 는 저장소에 없음 |
+| 와이어프레임 | `wireframe.html` (현재 버전, 화면 5개), `1.2-search-results.html`, `campus_map.webp` (와이어프레임에 쓰는 캠퍼스 안내도). 기획서 6.2가 가리키는 `wireframes/01_home.png` ~ `06_info.png` 는 저장소에 없음 |
 
 ※ `wireframe.html`, `persona_interview.md`, `campus_map.webp` 는 아직 `main` 에 없고 `claude/youthful-cray-m3yihs` 브랜치에만 있어요.
 
@@ -36,6 +36,7 @@
 |---|---|---|---|
 | 1.0 | 홈 / 검색 | `wireframe.html` ① 홈 · 검색 | F2 |
 | 1.1 | 목적지 확인 | `wireframe.html` ② 목적지 확인 | 기획서 화면 목록에는 없고 와이어프레임에만 있음 |
+| 1.2 | 검색 결과 선택 | `1.2-search-results.html` | /flow 에서 새로 생긴 화면. 같은 호수가 여러 건물에 있을 때 |
 | 2.0 | 경로 안내 | `wireframe.html` ③ 지도 길안내 | F1, F2, F3. 아래 세 탭을 묶는 화면 |
 | 2.1 | 내 위치 지도 | `wireframe.html` ③ 지도 길안내 (2.0과 같은 화면) | F1 |
 | 2.2 | 건물 상세 / 층별 지도 | `wireframe.html` ④ 건물 안 층 안내 | F2 (연결다리 안내는 F3) |

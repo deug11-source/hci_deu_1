@@ -9,7 +9,7 @@
 flowchart LR
   subgraph G1["검색"]
     S1_1["목적지 확인 1.1"]
-    N_RES["검색 결과 선택 (새 화면)"]
+    N_RES["검색 결과 선택 1.2"]
   end
   subgraph G2["길 안내"]
     S2_1["내 위치 지도 2.1"]
@@ -44,9 +44,9 @@ flowchart LR
   classDef has fill:#e8f1ff,stroke:#4a7fd6
   classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
   classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
-  class S1_1,S2_1,S2_0,S2_2,S3_0 has
+  class S1_1,S2_1,S2_0,S2_2,S3_0,N_RES has
   class S2_3 none
-  class N_RES,N_ARR new
+  class N_ARR new
 </pre></div>
 <h2>플로우 1: 처음 가는 강의실 찾기 김서윤 (핵심)</h2>
 <div class="box"><pre class="mermaid">
@@ -59,7 +59,7 @@ flowchart LR
   S2_0 -.->|"자동 전환 안 되면 층별 지도 탭"| S2_2
   S2_2 -.->|"자동 전환 안 되면 도착 확인"| N_ARR
   S2_1 -.->|"결과 없음 다시 검색 안내"| S2_1
-  S2_1 -.->|"결과 여러 개"| N_RES["검색 결과 선택 (새 화면)"]
+  S2_1 -.->|"결과 여러 개"| N_RES["검색 결과 선택 1.2"]
   N_RES -.->|"결과 선택"| S1_1
   S2_1 -.->|"지하 표기 헷갈림 이 강의실이 맞나요 안내 창"| S1_1
   S1_1 -.->|"아니에요 두 후보 보기"| N_RES
@@ -75,8 +75,8 @@ flowchart LR
   classDef has fill:#e8f1ff,stroke:#4a7fd6
   classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
   classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
-  class S2_1,S1_1,S2_0,S2_2,S3_0 has
-  class N_ARR,N_RES new
+  class S2_1,S1_1,S2_0,S2_2,S3_0,N_RES has
+  class N_ARR new
 </pre></div>
 <h2>플로우 2: 건물 안에서 강의실 찾기 이도현</h2>
 <p class="lg">검색 단계의 갈림길(결과 없음, 결과 여러 개, 지하 표기 헷갈림, 위치를 못 잡음)은 플로우 1과 같아서 생략했어요.</p>
