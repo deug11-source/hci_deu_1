@@ -17,7 +17,7 @@ a{color:inherit}
 .topbar{display:flex;justify-content:space-between;align-items:center;min-height:48px;padding:4px 16px 8px}
 .topbar .title{font-size:22px;font-weight:800;color:var(--main-strong);letter-spacing:-.3px}
 .topbar .back{font-size:17px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:4px;min-height:44px}
-.topbar .meta{font-size:13px;color:var(--sub);background:none;border:0;min-height:44px;padding:0 4px;cursor:pointer}
+.topbar .meta{display:flex;align-items:center;font-size:13px;color:var(--sub);background:none;border:0;min-height:44px;padding:0 4px;cursor:pointer}
 .pad{padding:0 16px;display:flex;flex-direction:column;gap:10px}
 .search{display:flex;align-items:center;gap:8px;min-height:52px;border:2px solid var(--main);border-radius:16px;padding:0 6px 0 14px;background:#fff}
 .search input{flex:1;border:0;outline:0;font-size:16px;background:none;min-width:0;color:var(--text)}
@@ -53,6 +53,19 @@ a{color:inherit}
 .pinmode{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
 .pinmode b{background:var(--accent);color:var(--text);font-size:13px;padding:6px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .pinmode i{width:4px;height:18px;background:var(--accent-ink);border-radius:2px}
+/* 1.1 목적지 확인 */
+.dest{display:flex;flex-direction:column;gap:2px}
+.dest .tag{align-self:flex-start;font-size:12px;font-weight:800;background:var(--accent);color:var(--text);border-radius:999px;padding:3px 10px;margin-bottom:4px}
+.dest h2{margin:0;font-size:22px;font-weight:800}
+.dest .floor{font-size:15px;color:var(--sub)}.dest .floor b{color:var(--text)}
+.dist{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.dist b{font-size:20px;font-weight:800}.dist span{font-size:13px;color:var(--sub)}
+.up{font-size:12px;font-weight:700;background:var(--warn-bg);color:var(--warn-text);border-radius:999px;padding:2px 8px}
+.where{display:flex;gap:10px;align-items:flex-start;border-radius:16px;padding:12px;font-size:14px;line-height:1.5}
+.where i{font-style:normal;font-size:18px;line-height:1.2}
+.where.no{background:var(--main-soft);color:var(--text)}
+.where.nb{background:var(--accent-soft);color:var(--accent-ink)}
+.where.ok{background:var(--main-soft);color:var(--main-strong)}
+.btns{display:flex;flex-direction:column;gap:8px}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -123,6 +136,64 @@ a{color:inherit}
     <button onclick="setState(this,'pin')">권한 안 켬: 출발 핀</button>
   </div>
 </section>
+<section class="screen" id="1.1" data-name="목적지 확인" data-state="normal">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="topbar">
+    <a class="back tap" href="#2.1" aria-label="뒤로, 다시 검색">‹ 401호</a>
+    <span class="meta">검색 결과</span>
+  </div>
+  <div class="map" style="margin-top:0">
+    <svg viewBox="0 0 390 320" role="img" aria-label="목적지 26번 건물과 내 위치">
+      <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
+      <path d="M120 330 C140 280 170 250 210 200 S250 90 240 -10" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+      <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
+        <rect x="40" y="70" width="80" height="54" rx="14" fill="#cfeee6"/><text x="80" y="102">13</text>
+        <rect x="262" y="160" width="74" height="54" rx="14" fill="#cfeee6"/><text x="299" y="192">15</text>
+        <rect x="30" y="170" width="70" height="44" rx="14" fill="#d9efe9"/><text x="65" y="197">정문</text>
+      </g>
+      <path d="M168 236 C200 215 215 190 240 150 S285 105 300 92" fill="none" stroke="#14a38b" stroke-width="5" stroke-dasharray="2 10" stroke-linecap="round"/>
+      <rect x="266" y="26" width="94" height="66" rx="16" fill="#ff9f6e"/>
+      <text x="313" y="56" text-anchor="middle" font-size="15" font-weight="800" fill="#1d2b28">26</text>
+      <text x="313" y="76" text-anchor="middle" font-size="12" font-weight="800" fill="#1d2b28">목적지</text>
+      <circle cx="168" cy="236" r="22" fill="#2f6fe4" fill-opacity=".18"/>
+      <circle cx="168" cy="236" r="9" fill="#2f6fe4" stroke="#fff" stroke-width="4"/>
+    </svg>
+    <button class="mapbtn tap" style="bottom:40px" aria-label="내 위치로" onclick="toast('내 위치로 이동했어요')">⊕</button>
+    <span class="maplabel">캠퍼스 안내도 자리 (예시)</span>
+  </div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="dest">
+      <span class="tag">목적지</span>
+      <h2>26번 건물 · 401호</h2>
+      <div class="floor"><b>4층</b> · 지도에서 피치색으로 표시한 건물</div>
+    </div>
+    <div class="dist"><b>약 380 m</b><span>도보 7분</span><span class="up">오르막 있음</span></div>
+    <div class="where no" data-v="away"><i>📍</i><div>지금 <b>13번 건물</b> 근처에 있어요. 목적지 건물이 아니에요.</div></div>
+    <div class="where nb" data-v="neighbor"><i>👉</i><div>지금 <b>25번 건물</b>에 있어요. 목적지는 붙어 있는 <b>옆 건물</b>이에요.</div></div>
+    <div class="where ok" data-v="here"><i>✅</i><div><b>지금 이 건물이에요.</b> 층별 지도로 강의실까지 안내해요.</div></div>
+    <div class="btns">
+      <a class="btn tap" href="#2.0" data-v="away">길찾기 시작</a>
+      <a class="btn tap" href="#2.2" data-v="neighbor">연결 통로로 길찾기</a>
+      <a class="btn tap" href="#2.2" data-v="here">층별 지도 보기</a>
+      <a class="btn ghost tap" href="#2.3">주변 보기</a>
+    </div>
+  </div>
+  <div class="dim" data-v="confirm">
+    <div class="dialog" role="dialog" aria-label="강의실 확인">
+      <h3>이 강의실이 맞나요?</h3>
+      <p><b style="color:var(--text)">26번 건물 401호 (지상 4층)</b>를 찾았어요. 지하 강의실(B401)을 찾으셨다면 ‘아니에요’를 눌러 주세요.</p>
+      <button class="btn tap" onclick="setState(this,'normal');toast('목적지를 확인했어요')">맞아요</button>
+      <a class="btn ghost tap" href="#1.2">아니에요, 다른 후보 보기</a>
+    </div>
+  </div>
+  <div class="alt"><span>갈림길 모습 보기</span>
+    <button class="on" onclick="setState(this,'normal')">기본: 목적지 건물 아님</button>
+    <button onclick="setState(this,'neighbor')">붙어 있는 옆 건물</button>
+    <button onclick="setState(this,'here')">지금 이 건물</button>
+    <button onclick="setState(this,'confirm')">지하 표기 헷갈림</button>
+  </div>
+</section>
 <!-- 화면 끝 -->
 </div>
 <div id="toast"></div>
@@ -134,9 +205,10 @@ function toast(m){T.textContent=m;T.classList.add("on");clearTimeout(T._t);T._t=
 function show(){const id=decodeURIComponent(location.hash.slice(1));const t=S.find(s=>s.id===id)||S[0];if(id&&!S.some(s=>s.id===id))toast("아직 만들지 않은 화면이에요");S.forEach(s=>s.classList.toggle("on",s===t));L.classList.remove("on");window.scrollTo(0,0)}
 addEventListener("hashchange",show);show();
 /* 공통: 화면 안의 갈림길 모습 바꾸기. data-v 는 그 모습에서만 보임 */
-const VIEWS={normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]};
+/* 화면별 갈림길 모습: VIEWS["화면ID"][모습] = 그 모습에서 보일 data-v 목록 */
+const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]}};
 function setState(el,st){const s=el.closest(".screen");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}
-function paint(s){const on=VIEWS[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"flex":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":""}
+function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"flex":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":""}
 S.forEach(s=>{if(s.dataset.state)paint(s)});
 function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b))}
 function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}
