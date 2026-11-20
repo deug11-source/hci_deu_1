@@ -1,0 +1,143 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>여기맞캠? 프로토타입</title>
+<style>
+:root{--main:#14a38b;--main-strong:#0e7f6c;--main-soft:#e6f7f3;--accent:#ff9f6e;--accent-soft:#fff1e8;--accent-ink:#9a4a1c;--me:#2f6fe4;--bg:#ffffff;--text:#1d2b28;--sub:#5b6b67;--line:#e3ebe8;--warn-bg:#fff6d9;--warn-text:#6b4b00;--radius:20px}
+*{box-sizing:border-box}body{margin:0;background:#eceef1;font-family:system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--text)}
+.device{width:390px;max-width:100%;min-height:780px;margin:24px auto;background:var(--bg);border-radius:28px;box-shadow:0 8px 30px rgba(0,0,0,.12);overflow:hidden;position:relative}
+.screen{display:none;min-height:780px}.screen.on{display:block}
+#toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:20px;font-size:14px;opacity:0;transition:.2s;pointer-events:none}#toast.on{opacity:1}
+#idx{position:fixed;right:16px;top:16px;font-size:13px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer}
+#list{position:fixed;right:16px;top:56px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px;display:none;max-height:70vh;overflow:auto;min-width:200px}#list.on{display:block}#list a{display:block;padding:6px 8px;color:var(--text);text-decoration:none;font-size:14px;border-radius:8px}#list a:hover{background:#f2f2f5}
+/* 공통 부품 스타일은 여기 아래에 */
+.screen{position:relative;display:none;flex-direction:column}.screen.on{display:flex}
+button{font:inherit;color:inherit}
+a{color:inherit}
+.tap{cursor:pointer;transition:transform .08s,background .15s}.tap:active{transform:scale(.97)}
+.status{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);padding:12px 22px 4px}
+.topbar{display:flex;justify-content:space-between;align-items:center;min-height:48px;padding:4px 16px 8px}
+.topbar .title{font-size:22px;font-weight:800;color:var(--main-strong);letter-spacing:-.3px}
+.topbar .back{font-size:17px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:4px;min-height:44px}
+.topbar .meta{font-size:13px;color:var(--sub);background:none;border:0;min-height:44px;padding:0 4px;cursor:pointer}
+.pad{padding:0 16px;display:flex;flex-direction:column;gap:10px}
+.search{display:flex;align-items:center;gap:8px;min-height:52px;border:2px solid var(--main);border-radius:16px;padding:0 6px 0 14px;background:#fff}
+.search input{flex:1;border:0;outline:0;font-size:16px;background:none;min-width:0;color:var(--text)}
+.search input::placeholder{color:var(--sub)}
+.search .go{border:0;background:var(--main-strong);color:#fff;border-radius:12px;min-width:44px;min-height:40px;font-weight:700;cursor:pointer}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:14px;cursor:pointer}
+.chip.on{background:var(--main-soft);border-color:var(--main);color:var(--main-strong);font-weight:700}
+.hint{font-size:13px;line-height:1.5;border-radius:14px;padding:10px 12px}
+.hint.bad{background:var(--accent-soft);color:var(--accent-ink)}
+.map{position:relative;flex:1;min-height:300px;margin-top:10px;background:#eaf5f1;overflow:hidden}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.mapbtn{position:absolute;right:14px;width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.08);font-size:18px;color:var(--main-strong);cursor:pointer}
+.maplabel{position:absolute;left:12px;bottom:28px;font-size:11px;color:var(--sub);background:rgba(255,255,255,.85);border-radius:8px;padding:2px 6px}
+.sheet{position:relative;margin-top:-20px;background:#fff;border-radius:var(--radius) var(--radius) 0 0;box-shadow:0 -6px 20px rgba(0,0,0,.08);padding:10px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);align-self:center}
+.label{font-size:13px;color:var(--sub);font-weight:600}
+.rows{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:52px;padding:8px 14px;border-top:1px solid var(--line);text-decoration:none;background:#fff}
+.row:first-child{border-top:0}.row:active{background:var(--main-soft)}
+.row b{font-size:15px}.row .r{font-size:13px;color:var(--sub);font-weight:700}
+.btn{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:999px;font-size:16px;font-weight:800;text-decoration:none;border:0;cursor:pointer;background:var(--main-strong);color:#fff;width:100%}
+.btn.ghost{background:#fff;color:var(--main-strong);border:2px solid var(--main-strong)}
+.dim{position:absolute;inset:0;background:rgba(29,43,40,.45);display:flex;align-items:flex-end;z-index:5}
+.dialog{background:#fff;width:100%;border-radius:24px 24px 0 0;padding:22px 18px 20px;display:flex;flex-direction:column;gap:10px}
+.dialog h3{margin:0;font-size:19px;font-weight:800}.dialog p{margin:0 0 6px;font-size:15px;line-height:1.55;color:var(--sub)}
+.alt{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px 14px;border-top:1px dashed var(--line);background:#fafcfb}
+.alt span{font-size:11px;color:var(--sub);width:100%}
+.alt button,.alt a{font-size:11px;min-height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.alt .on{border-color:var(--main);color:var(--main-strong);font-weight:700}
+[data-v]{display:none}
+/* 2.1 내 위치 지도 */
+.pinmode{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.pinmode b{background:var(--accent);color:var(--text);font-size:13px;padding:6px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.pinmode i{width:4px;height:18px;background:var(--accent-ink);border-radius:2px}
+</style></head><body>
+<button id="idx">화면 목록</button><div id="list"></div>
+<div class="device">
+<!-- 화면은 여기에 하나씩 추가: <section class="screen" id="1.0" data-name="홈"> ... </section> -->
+<section class="screen" id="2.1" data-name="내 위치 지도" data-state="normal">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="topbar">
+    <span class="title">여기맞캠?</span>
+    <button class="meta tap" onclick="toast('지금은 동의대 가야캠퍼스만 있어요')">동의대 가야캠퍼스 ▾</button>
+  </div>
+  <form class="pad" onsubmit="event.preventDefault();s21search(this)">
+    <label class="search">🔍<input name="q" placeholder="건물 번호·강의실 검색 (예: 401호)" autocomplete="off" aria-label="건물 번호나 강의실 검색"><button class="go tap" aria-label="검색">검색</button></label>
+    <div class="chips" role="radiogroup" aria-label="검색 종류">
+      <button type="button" class="chip on tap" onclick="pick(this)">강의실</button>
+      <button type="button" class="chip tap" onclick="pick(this)">건물</button>
+      <button type="button" class="chip tap" onclick="pick(this)">편의시설</button>
+    </div>
+    <div class="hint bad" data-v="noresult">‘1001호’를 찾지 못했어요. 호수를 다시 확인하고 검색해 주세요.</div>
+  </form>
+  <div class="map">
+    <svg viewBox="0 0 390 320" role="img" aria-label="캠퍼스 안내도와 내 위치">
+      <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
+      <path d="M120 330 C140 280 170 250 210 200 S250 90 240 -10" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+      <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
+        <rect x="40" y="70" width="80" height="54" rx="14" fill="#cfeee6"/><text x="80" y="102">13</text>
+        <rect x="270" y="30" width="86" height="60" rx="14" fill="#cfeee6"/><text x="313" y="65">26</text>
+        <rect x="262" y="160" width="74" height="54" rx="14" fill="#cfeee6"/><text x="299" y="192">15</text>
+        <rect x="30" y="170" width="70" height="44" rx="14" fill="#d9efe9"/><text x="65" y="197">정문</text>
+      </g>
+      <g data-v-svg="me">
+        <circle cx="168" cy="236" r="26" fill="#2f6fe4" fill-opacity=".18"/>
+        <circle cx="168" cy="236" r="10" fill="#2f6fe4" stroke="#fff" stroke-width="4"/>
+        <rect x="184" y="222" width="64" height="26" rx="13" fill="#fff"/><text x="216" y="240" text-anchor="middle" font-size="13" font-weight="800" fill="#1d2b28">내 위치</text>
+      </g>
+    </svg>
+    <div class="pinmode" data-v="pin"><b>여기서 출발</b><i></i></div>
+    <button class="mapbtn tap" style="top:14px" aria-label="내 위치로" onclick="toast('내 위치로 이동했어요')">⊕</button>
+    <span class="maplabel">캠퍼스 안내도 자리 (예시)</span>
+  </div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <div data-v="pin" style="flex-direction:column;gap:10px">
+      <div class="label">지도를 움직여 출발할 곳에 핀을 맞춰 주세요</div>
+      <button class="btn tap" onclick="toast('출발 위치를 정했어요');setState(this,'normal')">여기서 출발</button>
+    </div>
+    <div data-v="list" style="flex-direction:column;gap:10px">
+      <div class="label">최근 검색</div>
+      <div class="rows">
+        <a class="row tap" href="#1.1"><b>26번 건물 401호</b><span class="r">4층</span></a>
+        <a class="row tap" href="#1.1"><b>16번 건물 학생식당</b><span class="r">B1</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="dim" data-v="perm">
+    <div class="dialog" role="dialog" aria-label="위치 권한 안내">
+      <h3>내 위치를 찾지 못했어요</h3>
+      <p>위치 권한을 켜면 지금 있는 곳에서 바로 길을 안내해요.</p>
+      <button class="btn tap" onclick="toast('위치 권한을 켰어요');setState(this,'normal')">위치 권한 켜기</button>
+      <button class="btn ghost tap" onclick="setState(this,'pin')">지도에서 출발 위치 고르기</button>
+    </div>
+  </div>
+  <div class="alt"><span>갈림길 모습 보기</span>
+    <button class="on" onclick="setState(this,'normal')">기본</button>
+    <button onclick="setState(this,'noresult')">결과 없음</button>
+    <a href="#1.2">결과 여러 개 → 1.2</a>
+    <a href="#1.1">지하 표기 헷갈림 → 1.1</a>
+    <button onclick="setState(this,'perm')">위치를 못 잡음</button>
+    <button onclick="setState(this,'pin')">권한 안 켬: 출발 핀</button>
+  </div>
+</section>
+<!-- 화면 끝 -->
+</div>
+<div id="toast"></div>
+<script>
+const S=[...document.querySelectorAll(".screen")],L=document.getElementById("list"),T=document.getElementById("toast");
+L.innerHTML=S.map(s=>`<a href="#${s.id}">${s.id} ${s.dataset.name||""}</a>`).join("");
+document.getElementById("idx").onclick=()=>L.classList.toggle("on");
+function toast(m){T.textContent=m;T.classList.add("on");clearTimeout(T._t);T._t=setTimeout(()=>T.classList.remove("on"),1600)}
+function show(){const id=decodeURIComponent(location.hash.slice(1));const t=S.find(s=>s.id===id)||S[0];if(id&&!S.some(s=>s.id===id))toast("아직 만들지 않은 화면이에요");S.forEach(s=>s.classList.toggle("on",s===t));L.classList.remove("on");window.scrollTo(0,0)}
+addEventListener("hashchange",show);show();
+/* 공통: 화면 안의 갈림길 모습 바꾸기. data-v 는 그 모습에서만 보임 */
+const VIEWS={normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]};
+function setState(el,st){const s=el.closest(".screen");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}
+function paint(s){const on=VIEWS[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"flex":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":""}
+S.forEach(s=>{if(s.dataset.state)paint(s)});
+function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b))}
+function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}
+</script></body></html>
