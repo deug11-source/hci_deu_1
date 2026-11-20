@@ -1,0 +1,126 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>서비스 플로우</title>
+<style>body{font-family:system-ui,sans-serif;margin:0;padding:24px;background:#fafaf8;color:#222}h1{font-size:22px}h2{font-size:17px;margin:32px 0 6px}.box{background:#fff;border:1px solid #ddd;border-radius:12px;padding:16px;overflow-x:auto}.lg{font-size:13px;color:#555}.lg span{display:inline-block;margin-right:14px}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script></head><body>
+<h1>여기맞캠? 서비스 플로우</h1>
+<p class="lg"><span><i style="background:#e8f1ff;border:1px solid #4a7fd6"></i>와이어프레임 있음</span><span><i style="background:#fff4e0;border:1px dashed #d68a1a"></i>와이어프레임 없음</span><span><i style="background:#ffecec;border:1px dashed #c44"></i>새 화면</span></p>
+<h2>전체 서비스 플로우 (굵은 화살표는 핵심 플로우)</h2>
+<div class="box"><pre class="mermaid">
+flowchart LR
+  subgraph G1["검색"]
+    S1_1["목적지 확인 1.1"]
+    N_RES["검색 결과 선택 1.2"]
+  end
+  subgraph G2["길 안내"]
+    S2_1["내 위치 지도 2.1"]
+    S2_0["경로 안내 2.0"]
+    S2_2["건물 상세 층별 지도 2.2"]
+    S2_3["주변 랜드마크 로드뷰 2.3"]
+    N_ARR["도착 완료 (새 화면)"]
+  end
+  subgraph G3["정보"]
+    S3_0["정보 안내 3.0"]
+  end
+  S2_1 ==>|"강의실 호수 검색"| S1_1
+  S1_1 ==>|"길찾기 시작"| S2_0
+  S2_0 ==>|"건물 입구 자동 전환 또는 탭"| S2_2
+  S2_2 ==>|"강의실 앞 자동 전환 또는 도착 확인"| N_ARR
+  N_ARR ==>|"홈으로"| S2_1
+  S1_1 -->|"지금 이 건물 또는 옆 건물"| S2_2
+  S1_1 -->|"주변 보기"| S2_3
+  S2_3 -->|"길찾기 시작"| S2_0
+  S1_1 -.->|"잘못 고름 뒤로 또는 취소"| S2_1
+  S2_1 -.->|"결과 여러 개"| N_RES
+  N_RES -.->|"결과 선택"| S1_1
+  S2_1 -.->|"지하 표기 헷갈림 안내 창"| S1_1
+  S1_1 -.->|"아니에요 두 후보 보기"| N_RES
+  S2_1 -.->|"위치를 못 잡음 권한 안 켜면 지도에 출발 핀"| S2_1
+  S2_2 -.->|"정보가 틀림"| S3_0
+  S2_3 -.->|"사진이 다름"| S3_0
+  N_ARR -.->|"정보 확인 제보"| S3_0
+  S3_0 -.->|"들어오기 전 화면으로"| S2_2
+  S3_0 -.->|"들어오기 전 화면으로"| S2_3
+  S3_0 -.->|"들어오기 전 화면으로"| N_ARR
+  classDef has fill:#e8f1ff,stroke:#4a7fd6
+  classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
+  classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
+  class S1_1,S2_1,S2_0,S2_2,S3_0,N_RES has
+  class S2_3 none
+  class N_ARR new
+</pre></div>
+<h2>플로우 1: 처음 가는 강의실 찾기 김서윤 (핵심)</h2>
+<div class="box"><pre class="mermaid">
+flowchart LR
+  S2_1["내 위치 지도 2.1"] -->|"검색창에 강의실 호수 입력"| S1_1["목적지 확인 1.1"]
+  S1_1 -->|"목적지인지 확인하고 길찾기 시작"| S2_0["경로 안내 2.0"]
+  S2_0 -->|"건물 입구 도착 시 자동 전환"| S2_2["건물 상세 층별 지도 2.2"]
+  S2_2 -->|"강의실 앞 도착 시 자동 전환"| N_ARR["도착 완료 (새 화면)"]
+  N_ARR -->|"홈으로"| S2_1
+  S2_0 -.->|"자동 전환 안 되면 층별 지도 탭"| S2_2
+  S2_2 -.->|"자동 전환 안 되면 도착 확인"| N_ARR
+  S2_1 -.->|"결과 없음 다시 검색 안내"| S2_1
+  S2_1 -.->|"결과 여러 개"| N_RES["검색 결과 선택 1.2"]
+  N_RES -.->|"결과 선택"| S1_1
+  S2_1 -.->|"지하 표기 헷갈림 이 강의실이 맞나요 안내 창"| S1_1
+  S1_1 -.->|"아니에요 두 후보 보기"| N_RES
+  S2_1 -.->|"위치를 못 잡음 권한 안 켜면 지도에 출발 핀"| S2_1
+  S1_1 -.->|"지금 건물이 목적지"| S2_2
+  S1_1 -.->|"잘못 고름 뒤로 또는 취소"| S2_1
+  S2_0 -.->|"경로 이탈 방향 혼동 위치 튐 잘못 들어간 건물 다시 안내"| S2_0
+  S2_2 -.->|"층이 연결 안 됨 연결된 층 안내"| S2_2
+  S2_2 -.->|"정보가 틀림 제보"| S3_0["정보 안내 3.0"]
+  N_ARR -.->|"정보 확인 제보"| S3_0
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| S2_2
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| N_ARR
+  classDef has fill:#e8f1ff,stroke:#4a7fd6
+  classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
+  classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
+  class S2_1,S1_1,S2_0,S2_2,S3_0,N_RES has
+  class N_ARR new
+</pre></div>
+<h2>플로우 2: 건물 안에서 강의실 찾기 이도현</h2>
+<p class="lg">검색 단계의 갈림길(결과 없음, 결과 여러 개, 지하 표기 헷갈림, 위치를 못 잡음)은 플로우 1과 같아서 생략했어요.</p>
+<div class="box"><pre class="mermaid">
+flowchart LR
+  S2_1["내 위치 지도 2.1"] -->|"검색창에 강의실 호수 입력"| S1_1["목적지 확인 1.1"]
+  S1_1 -->|"지금 이 건물 확인"| S2_2["건물 상세 층별 지도 2.2"]
+  S2_2 -->|"강의실 앞 도착 시 자동 전환"| N_ARR["도착 완료 (새 화면)"]
+  N_ARR -->|"홈으로"| S2_1
+  S1_1 -.->|"강의실이 붙어 있는 옆 건물 연결 통로까지 안내"| S2_2
+  S1_1 -.->|"잘못 고름 뒤로 또는 취소"| S2_1
+  S2_2 -.->|"자동 전환 안 되면 도착 확인"| N_ARR
+  S2_2 -.->|"층이 연결 안 됨 연결된 층 안내"| S2_2
+  S2_2 -.->|"정보가 틀림 제보"| S3_0["정보 안내 3.0"]
+  N_ARR -.->|"정보 확인 제보"| S3_0
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| S2_2
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| N_ARR
+  classDef has fill:#e8f1ff,stroke:#4a7fd6
+  classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
+  classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
+  class S2_1,S1_1,S2_2,S3_0 has
+  class N_ARR new
+</pre></div>
+<h2>플로우 3: 아는 건물을 기준으로 처음 가는 건물 찾기 박지민</h2>
+<p class="lg">검색 단계의 갈림길, 경로 안내 2.0과 층별 지도 2.2 안의 갈림길은 플로우 1과 같아서 생략했어요.</p>
+<div class="box"><pre class="mermaid">
+flowchart LR
+  S2_1["내 위치 지도 2.1"] -->|"검색창에 건물이나 강의실 입력"| S1_1["목적지 확인 1.1"]
+  S1_1 -->|"주변 보기"| S2_3["주변 랜드마크 로드뷰 2.3"]
+  S2_3 -->|"아는 건물 확인하고 길찾기 시작"| S2_0["경로 안내 2.0"]
+  S2_0 -->|"건물 입구 도착 시 자동 전환"| S2_2["건물 상세 층별 지도 2.2"]
+  S2_2 -->|"강의실 앞 도착 시 자동 전환"| N_ARR["도착 완료 (새 화면)"]
+  N_ARR -->|"홈으로"| S2_1
+  S1_1 -.->|"잘못 고름 뒤로 또는 취소"| S2_1
+  S2_3 -.->|"사진이 실제와 다름 제보"| S3_0["정보 안내 3.0"]
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| S2_3
+  N_ARR -.->|"정보 확인 제보"| S3_0
+  S3_0 -.->|"제보 후 들어오기 전 화면으로"| N_ARR
+  classDef has fill:#e8f1ff,stroke:#4a7fd6
+  classDef none fill:#fff4e0,stroke:#d68a1a,stroke-dasharray:4
+  classDef new fill:#ffecec,stroke:#c44,stroke-dasharray:4
+  class S2_1,S1_1,S2_0,S2_2,S3_0 has
+  class S2_3 none
+  class N_ARR new
+</pre></div>
+<script>mermaid.initialize({startOnLoad:true,theme:"neutral",flowchart:{htmlLabels:true}})</script>
+</body></html>
