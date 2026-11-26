@@ -122,6 +122,15 @@ body{background:#FFF5EE}
 .warnc{background:var(--warn-bg);color:var(--warn-text);border-radius:20px;padding:12px 14px;font-size:14px;line-height:1.5;border:2px solid #f5dc8f}
 .room{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border-radius:20px;padding:12px 14px;border:2px solid #c8efe2;text-decoration:none;min-height:56px}
 .room b{font-size:16px}.room small{display:block;font-size:12px;color:var(--sub);margin-top:2px}.room .go{font-size:13px;font-weight:800;color:var(--accent-ink);white-space:nowrap}
+/* 2.4 도착 완료 */
+.arrive{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px 22px;text-align:center}
+.arrive .badge{width:120px;height:120px;border-radius:50%;background:#fff;border:4px solid var(--accent);box-shadow:0 6px 0 #ffd8c2;display:flex;align-items:center;justify-content:center;font-size:56px}
+.arrive .hi{font-size:15px;font-weight:800;color:var(--main-strong);background:var(--main-soft);border-radius:999px;padding:4px 14px}
+.arrive h2{margin:0;font-size:28px;font-weight:900;line-height:1.3}
+.arrive .room2{background:var(--card);border:2px solid #ffe2d0;border-radius:24px;padding:14px 18px;width:100%}
+.arrive .room2 b{display:block;font-size:24px;font-weight:900}.arrive .room2 span{font-size:14px;color:var(--sub)}
+.arrive .walk{font-size:14px;color:var(--sub)}.arrive .walk b{color:var(--text)}
+.linkbtn{min-height:44px;border:0;background:none;color:var(--accent-ink);font-weight:800;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -352,6 +361,21 @@ body{background:#FFF5EE}
     <button onclick="setState(this,'neighbor');floorPick(this.closest('.screen').querySelectorAll('.floors button')[3],'3','3F')">옆 건물 연결 통로</button>
     <button onclick="setState(this,'arrive')">강의실 앞: 자동 전환 안 됨</button>
     <button onclick="toast('강의실에 도착했어요!');setTimeout(()=>location.hash='#2.4',900)">강의실 앞: 자동 전환</button>
+  </div>
+</section>
+<section class="screen" id="2.4" data-name="도착 완료">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="topbar">
+    <a class="back tap" href="#2.1" aria-label="홈으로, 내 위치 지도">‹ 홈으로</a>
+    <span class="meta">도착 완료</span>
+  </div>
+  <div class="arrive">
+    <div class="badge" aria-hidden="true">🎉</div>
+    <span class="hi">도착했어요!</span>
+    <div class="room2"><b>26번 건물 · 401호</b><span>4층 · 오른쪽 동 끝, 여기가 찾던 강의실이에요</span></div>
+    <a class="btn tap" href="#3.0">정보가 맞았는지 알려주기</a>
+    <div class="walk"><b>7분</b> 동안 <b>380 m</b>를 걸었어요</div>
+    <a class="linkbtn tap" href="#2.2" onclick="toast('층별 지도로 다시 안내할게요')">아직 강의실에 안 왔어요</a>
   </div>
 </section>
 <!-- 화면 끝 -->
