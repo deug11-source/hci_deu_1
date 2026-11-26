@@ -142,6 +142,17 @@ body{background:#FFF5EE}
 .lv.b{background:var(--accent);color:var(--text)}
 .again{margin-top:auto;padding:16px;display:flex;flex-direction:column;gap:8px;text-align:center}
 .again span{font-size:14px;color:var(--sub);font-weight:700}
+/* 3.0 정보 안내 */
+.infoc{background:#fff;border:2px solid #c8efe2;border-radius:22px;padding:12px 14px;display:flex;flex-direction:column;gap:3px}
+.infoc b{font-size:16px}.infoc span{font-size:14px;color:var(--sub);line-height:1.5}
+.infoc .src{display:inline-block;align-self:flex-start;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;background:#fff;border:1.5px solid var(--main);color:var(--main-strong);margin-bottom:2px}
+.repf{background:var(--card);border:2px dashed #ffd8c2;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.repf .label{font-size:16px;color:var(--text);font-weight:800}
+.fld{display:flex;align-items:center;gap:8px;min-height:48px;border-radius:16px;border:2px solid #ffe2d0;background:#fff;padding:0 14px;font-size:14px;color:var(--text);text-align:left;width:100%;cursor:pointer}
+.fld small{margin-left:auto;font-size:12px;color:var(--sub);font-weight:700}
+textarea.fld{min-height:96px;padding:12px 14px;resize:none;font:inherit;font-size:14px;cursor:text}
+textarea.fld::placeholder{color:var(--sub)}
+.errmsg{font-size:14px;color:var(--accent-ink);font-weight:700}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -418,6 +429,30 @@ body{background:#FFF5EE}
     <button onclick="setState(this,'twin')">"아니에요": 지하·지상 두 후보</button>
   </div>
 </section>
+<section class="screen" id="3.0" data-name="정보 안내" data-state="normal">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="topbar">
+    <a class="back tap" href="#2.2" onclick="event.preventDefault();goBack()" aria-label="뒤로, 들어오기 전 화면">‹ 정보 안내</a>
+  </div>
+  <div class="pad" style="padding-bottom:16px">
+    <div class="infoc"><span class="src">학교 도면</span><b>26번 건물 4층 평면도</b><span>마지막 확인 2026. 11. 05</span></div>
+    <div class="infoc"><span class="src">이용자 제보 → 운영진 검수 완료</span><b>3층 연결다리</b><span>마지막 확인 2026. 11. 10</span></div>
+    <button class="btn ghost tap" onclick="this.closest('.screen').querySelector('textarea').focus();toast('아래에 다른 점을 적어 주세요')">정보가 달라요 · 오류 제보하기</button>
+    <div class="repf">
+      <div class="label">제보하기</div>
+      <button class="fld tap" onclick="toast('지도에서 위치를 골랐어요')">📍 위치: 26번 건물 4층<small>지도에서 선택</small></button>
+      <button class="fld tap" onclick="this.querySelector('small').textContent='사진 1장';toast('사진을 붙였어요')">📷 사진 첨부<small>선택</small></button>
+      <textarea class="fld" aria-label="어떤 점이 다른지 설명" placeholder="설명: 어떤 점이 다른지 적어주세요"></textarea>
+      <div class="errmsg" data-v="err">✏️ 어떤 점이 다른지 한 줄이라도 적어 주세요</div>
+      <button class="btn tap" onclick="sendReport(this)">제보 보내기</button>
+    </div>
+    <div class="label" style="text-align:center">제보는 운영진이 확인한 뒤 반영합니다.</div>
+  </div>
+  <div class="alt"><span>갈림길 모습 보기</span>
+    <button class="on" onclick="setState(this,'normal')">기본</button>
+    <button onclick="setState(this,'empty')">설명 없이 보냄</button>
+  </div>
+</section>
 <!-- 화면 끝 -->
 </div>
 <div id="toast"></div>
@@ -430,12 +465,15 @@ function show(){const id=decodeURIComponent(location.hash.slice(1));const t=S.fi
 addEventListener("hashchange",show);show();
 /* 공통: 화면 안의 갈림길 모습 바꾸기. data-v 는 그 모습에서만 보임 */
 /* 화면별 갈림길 모습: VIEWS["화면ID"][모습] = 그 모습에서 보일 data-v 목록 */
-const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]},"2.2":{normal:["w4","now1"],neighbor:["nb","now3"],arrive:["w4","now4","arr"]},"1.2":{normal:["many","t101"],twin:["two","tB"]}};
+const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]},"2.2":{normal:["w4","now1"],neighbor:["nb","now3"],arrive:["w4","now4","arr"]},"1.2":{normal:["many","t101"],twin:["two","tB"]},"3.0":{normal:[],empty:["err"]}};
 function setState(el,st){const s=el.closest(".screen");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}
 function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":"";s.querySelectorAll('[data-v-svg]:not([data-v-svg="me"])').forEach(g=>g.style.display=on.includes(g.dataset.vSvg)?"":"none")}
 S.forEach(s=>{if(s.dataset.state)paint(s)});
 function floorPick(b,k,label){const sc=b.closest(".screen");sc.querySelectorAll(".floors button").forEach(x=>x.classList.toggle("on",x===b));sc.querySelectorAll("[data-plan]").forEach(d=>d.style.display=d.dataset.plan===k?(k==="x"?"flex":"block"):"none");sc.querySelector(".plan .fl").textContent=label+" 평면도"}
 function go12(st){const t=document.getElementById("1.2");if(t){t.dataset.state=st;paint(t);t.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}}
+let PREV="#2.1";addEventListener("hashchange",e=>{const from=new URL(e.oldURL).hash;if(location.hash==="#3.0"&&from&&from!=="#3.0")PREV=from});
+function goBack(){location.hash=PREV}
+function sendReport(b){const sc=b.closest(".screen"),t=sc.querySelector("textarea");if(!t.value.trim()){setState(b,"empty");t.focus();return}setState(b,"normal");t.value="";toast("제보를 보냈어요. 운영진이 확인한 뒤 반영해요");setTimeout(goBack,1300)}
 function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b))}
 function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}
 </script></body></html>
