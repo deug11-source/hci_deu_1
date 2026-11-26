@@ -132,6 +132,16 @@ body{background:#FFF5EE}
 .arrive .room2 b{display:block;font-size:22px;font-weight:900}.arrive .room2 span{font-size:14px;color:var(--sub)}
 .arrive .walk{font-size:14px;color:var(--sub)}.arrive .walk b{color:var(--text)}
 .linkbtn{min-height:44px;border:0;background:none;color:var(--accent-ink);font-weight:800;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+/* 1.2 검색 결과 선택 */
+.res{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:64px;padding:12px 14px;background:#fff;border-top:2px dashed #ffe9dc;text-decoration:none}
+.res:first-child{border-top:0}.res:active{background:var(--main-soft)}
+.res .w{font-size:16px;font-weight:800;line-height:1.35}
+.res .d{font-size:14px;color:var(--sub);margin-top:2px}
+.res .arr{font-size:22px;color:var(--main-strong);font-weight:800}
+.lv{display:inline-block;margin-left:6px;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;vertical-align:2px;background:#fff;border:1.5px solid var(--main);color:var(--main-strong)}
+.lv.b{background:var(--accent);color:var(--text)}
+.again{margin-top:auto;padding:16px;display:flex;flex-direction:column;gap:8px;text-align:center}
+.again span{font-size:14px;color:var(--sub);font-weight:700}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -199,7 +209,7 @@ body{background:#FFF5EE}
   <div class="alt"><span>갈림길 모습 보기</span>
     <button class="on" onclick="setState(this,'normal')">기본</button>
     <button onclick="setState(this,'noresult')">결과 없음</button>
-    <a href="#1.2">결과 여러 개 → 1.2</a>
+    <a href="#1.2" onclick="go12('normal')">결과 여러 개 → 1.2</a>
     <a href="#1.1">지하 표기 헷갈림 → 1.1</a>
     <button onclick="setState(this,'perm')">위치를 못 잡음</button>
     <button onclick="setState(this,'pin')">권한 안 켬: 출발 핀</button>
@@ -255,7 +265,7 @@ body{background:#FFF5EE}
       <h3>이 강의실이 맞나요?</h3>
       <p><b style="color:var(--text)">26번 건물 401호 (지상 4층)</b>를 찾았어요. 지하 강의실(B401)을 찾으셨다면 ‘아니에요’를 눌러 주세요.</p>
       <button class="btn tap" onclick="setState(this,'normal');toast('목적지를 확인했어요')">맞아요</button>
-      <a class="btn ghost tap" href="#1.2">아니에요, 다른 후보 보기</a>
+      <a class="btn ghost tap" href="#1.2" onclick="go12('twin')">아니에요, 다른 후보 보기</a>
     </div>
   </div>
   <div class="alt"><span>갈림길 모습 보기</span>
@@ -382,6 +392,32 @@ body{background:#FFF5EE}
     <a class="linkbtn tap" href="#2.2" onclick="toast('층별 지도로 다시 안내할게요')">아직 강의실에 안 왔어요</a>
   </div>
 </section>
+<section class="screen" id="1.2" data-name="검색 결과 선택" data-state="normal">
+  <div class="status"><span>9:41</span><span>●●●</span></div>
+  <div class="topbar">
+    <a class="back tap" href="#2.1" aria-label="뒤로, 다시 검색">‹ <span data-v="t101">101호</span><span data-v="tB">401호</span></a>
+    <span class="meta">검색 결과</span>
+  </div>
+  <div class="pad" style="padding-top:6px">
+    <div class="rows" role="list" data-v="many" style="display:flex;flex-direction:column">
+      <a class="res tap" role="listitem" href="#1.1"><div><div class="w">13번 건물 · 지하 1층<span class="lv b">지하 B101</span></div><div class="d">내 위치에서 약 250 m</div></div><span class="arr">›</span></a>
+      <a class="res tap" role="listitem" href="#1.1"><div><div class="w">13번 건물 · 1층<span class="lv">지상 101</span></div><div class="d">내 위치에서 약 250 m</div></div><span class="arr">›</span></a>
+      <a class="res tap" role="listitem" href="#1.1"><div><div class="w">26번 건물 · 1층<span class="lv">지상 101</span></div><div class="d">내 위치에서 약 380 m</div></div><span class="arr">›</span></a>
+    </div>
+    <div class="rows" role="list" data-v="two" style="display:flex;flex-direction:column">
+      <a class="res tap" role="listitem" href="#1.1"><div><div class="w">26번 건물 · 4층<span class="lv">지상 401</span></div><div class="d">내 위치에서 약 380 m</div></div><span class="arr">›</span></a>
+      <a class="res tap" role="listitem" href="#1.1"><div><div class="w">26번 건물 · 지하 1층<span class="lv b">지하 B401</span></div><div class="d">내 위치에서 약 380 m</div></div><span class="arr">›</span></a>
+    </div>
+  </div>
+  <div class="again">
+    <span>찾는 강의실이 없나요?</span>
+    <a class="btn ghost tap" href="#2.1" onclick="setTimeout(()=>{const q=document.querySelector('input[name=q]');if(q)q.focus()},60)">다시 검색</a>
+  </div>
+  <div class="alt"><span>갈림길 모습 보기</span>
+    <button class="on" onclick="setState(this,'normal')">같은 호수가 여러 건물에</button>
+    <button onclick="setState(this,'twin')">"아니에요": 지하·지상 두 후보</button>
+  </div>
+</section>
 <!-- 화면 끝 -->
 </div>
 <div id="toast"></div>
@@ -394,11 +430,12 @@ function show(){const id=decodeURIComponent(location.hash.slice(1));const t=S.fi
 addEventListener("hashchange",show);show();
 /* 공통: 화면 안의 갈림길 모습 바꾸기. data-v 는 그 모습에서만 보임 */
 /* 화면별 갈림길 모습: VIEWS["화면ID"][모습] = 그 모습에서 보일 data-v 목록 */
-const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]},"2.2":{normal:["w4","now1"],neighbor:["nb","now3"],arrive:["w4","now4","arr"]}};
+const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]},"2.2":{normal:["w4","now1"],neighbor:["nb","now3"],arrive:["w4","now4","arr"]},"1.2":{normal:["many","t101"],twin:["two","tB"]}};
 function setState(el,st){const s=el.closest(".screen");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}
 function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":"";s.querySelectorAll('[data-v-svg]:not([data-v-svg="me"])').forEach(g=>g.style.display=on.includes(g.dataset.vSvg)?"":"none")}
 S.forEach(s=>{if(s.dataset.state)paint(s)});
 function floorPick(b,k,label){const sc=b.closest(".screen");sc.querySelectorAll(".floors button").forEach(x=>x.classList.toggle("on",x===b));sc.querySelectorAll("[data-plan]").forEach(d=>d.style.display=d.dataset.plan===k?(k==="x"?"flex":"block"):"none");sc.querySelector(".plan .fl").textContent=label+" 평면도"}
+function go12(st){const t=document.getElementById("1.2");if(t){t.dataset.state=st;paint(t);t.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}}
 function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b))}
 function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}
 </script></body></html>
