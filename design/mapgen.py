@@ -71,7 +71,7 @@ svg21=('<svg viewBox="200 330 640 560" preserveAspectRatio="xMidYMid slice" role
 svg11=('<svg viewBox="250 450 560 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="목적지 제1인문관, 바깥길과 엘리베이터 지름길 두 개">'
        '<use href="#campus"/><g data-v-svg="rt">'
        f'<path d="{MAIN}" fill="none" stroke="#0e7f6c" stroke-width="7" stroke-dasharray="2 14" stroke-linecap="round" stroke-linejoin="round"/>'
-       +sc_paths(SC_LIB,7)+sc_paths(SC_SUD,7)+tag(650,690,'도서관 EV 5층')+tag(600,820,'수덕전 EV 5층')+'</g>'
+       +sc_paths(SC_LIB,7)+sc_paths(SC_SUD,7)+tag(650,690,'도서관 엘리베이터 5층')+tag(600,820,'수덕전 엘리베이터 5층')+'</g>'
        +DEST()+ME(498,478,180)+'</svg>')
 # 2.0 heading-up: me fixed at bottom-centre, map rotated so travel direction points up
 mx,my=470,600; VW,VH=560,470

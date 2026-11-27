@@ -53,11 +53,16 @@ def plan(n,dest=None,me=None,route=False):
         x+=ww
     if len(xs)>1: midx=xs[1]
     elif xs: midx=xs[-1]
-    if midx: s.append(f'<g transform="translate({midx:.0f} {BOT[1]+24})"><rect x="-36" y="-17" width="72" height="34" rx="12" fill="#fff" stroke="#0e7f6c" stroke-width="2.5"/><text y="7" text-anchor="middle" font-size="19" font-weight="900" fill="#0e7f6c">🛗 EV</text></g>')
+    if midx: s.append(f'<g transform="translate({midx:.0f} {BOT[1]+24})"><rect x="-68" y="-17" width="136" height="34" rx="12" fill="#fff" stroke="#0e7f6c" stroke-width="2.5"/><text y="7" text-anchor="middle" font-size="19" font-weight="900" fill="#0e7f6c">🛗 엘리베이터</text></g>')
     if n==1: s.append(f'<text x="{bp["입구"][0]+bp["입구"][1]/2-30:.0f}" y="{BOT[1]+30}" text-anchor="middle" font-size="19" font-weight="800" fill="#0e7f6c">▲ 정문 출입구</text>')
     if route and dest in bp and midx:
         dx,dw=bp[dest]
         s.append(f'<path d="M{midx:.0f} {BOT[0]} L{midx:.0f} {COR[0]+20} L{dx+dw/2:.0f} {COR[0]+20} L{dx+dw/2:.0f} {BOT[0]+6}" fill="none" stroke="#0e7f6c" stroke-width="7" stroke-dasharray="2 12" stroke-linecap="round" stroke-linejoin="round"/>')
+        # F6: 엘리베이터에서 내린 곳 표시와 가는 방향 화살표
+        ax=(midx+dx+dw/2)/2; d=-1 if dx+dw/2<midx else 1
+        s.append(f'<path d="M{ax-d*12:.0f} {COR[0]+8} L{ax+d*12:.0f} {COR[0]+20} L{ax-d*12:.0f} {COR[0]+32} Z" fill="#0e7f6c"/>')
+        s.append(f'<circle cx="{midx:.0f}" cy="{BOT[0]-4}" r="11" fill="#2f6fe4" stroke="#fff" stroke-width="4"/>')
+        s.append(f'<g transform="translate({midx+16:.0f} {BOT[0]-34})"><rect x="0" y="-15" width="168" height="30" rx="15" fill="#2f6fe4"/><text x="84" y="6" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">엘리베이터 내린 곳</text></g>')
     if dest in bp:
         dx,dw=bp[dest]; s.append(f'<rect x="{dx+dw/2-46:.0f}" y="{BOT[0]+86}" width="92" height="32" rx="16" fill="#1d2b28"/><text x="{dx+dw/2:.0f}" y="{BOT[0]+108}" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">목적지</text>')
     if me:
@@ -75,14 +80,14 @@ if __name__=='__main__':
     sec=re.sub(r'(<span class="fl">4F 평면도</span>).*?(\n    <span class="maplabel")',lambda m:m.group(1)+plans+m.group(2),sec,flags=re.S)
     sec=sec.replace('평면도 자리 (예시)','제1인문관 층별 안내도 참고')
     sec=sec.replace('<div class="warnc" data-v="w4">⚠️ 4층에는 연결다리가 없어요. <b>3층에서 연결다리로 건너간 뒤</b> 계단으로 올라가세요.</div>',
-                    '<div class="warnc" data-v="w4">🛗 가운데 <b>계단·엘리베이터로 4층</b>에 올라가 복도를 따라 <b>왼쪽 끝</b>으로 가세요. 401호는 왼쪽 계단 바로 옆이에요.</div>')
+                    '<div class="warnc" data-v="w4">🛗 가운데 <b>계단·엘리베이터로 4층</b>에 올라가, 평면도의 <b>‘엘리베이터 내린 곳’</b>에서 화살표 쪽으로 점선을 따라 <b>복도 끝 계단 옆 401호</b>로 가세요.</div>')
     sec=sec.replace('지금 있는 <b>제2인문관 3층 연결다리</b>로 건너가세요.','지금 있는 <b>제2인문관에서 이어진 통로</b>로 건너오세요.')
-    sec=sec.replace('<b>401호 · 4층 · 오른쪽 동 끝</b><small>정보 확인일 2026. 11 · 운영진 검수</small>','<b>401호 · 4층 · 왼쪽 끝 계단 옆</b><small>광고홍보학과 멀티미디어 BTL 광고실습실 · 층별 안내도 기준</small>')
+    sec=sec.replace('<b>401호 · 4층 · 오른쪽 동 끝</b><small>정보 확인일 2026. 11 · 운영진 검수</small>','<b>401호 · 4층 · 복도 끝 계단 옆</b><small>광고홍보학과 멀티미디어 BTL 광고실습실 · 층별 안내도 기준</small>')
     sec=sec.replace("floorPick(this.closest('.screen').querySelectorAll('.floors button')[3],'3','3F')","floorPick(this.closest('.screen').querySelectorAll('.floors button')[0],'1','1F')")
     h=h[:a]+sec+h[b:]
     h=h.replace('"2.2":{normal:["w4","now1"],neighbor:["nb","now3"],arrive:["w4","now4","arr"]}','"2.2":{normal:["w4","now1"],neighbor:["nb","now1"],arrive:["w4","now4","arr"]}')
     h=h.replace('d.style.display=d.dataset.plan===k?(k==="x"?"flex":"block"):"none"','d.style.display=d.dataset.plan===k?"block":"none"')
-    h=h.replace('<span>4층 · 오른쪽 동 끝, 여기가 찾던 강의실이에요</span>','<span>4층 왼쪽 끝 · 광고홍보학과 BTL 광고실습실이에요</span>')
+    h=h.replace('<span>4층 · 오른쪽 동 끝, 여기가 찾던 강의실이에요</span>','<span>4층 복도 끝 계단 옆 · 광고홍보학과 BTL 광고실습실이에요</span>')
     h=h.replace('를 찾았어요. 지하 강의실(B401)을 찾으셨다면 ‘아니에요’를 눌러 주세요.','를 찾았어요. 제1인문관에는 지하층이 없어요. 다른 건물의 B401을 찾으셨다면 ‘아니에요’를 눌러 주세요.')
     h=h.replace('<span class="src">학교 도면</span><b>제1인문관 4층 평면도</b><span>마지막 확인 2026. 11. 05</span>','<span class="src">건물 층별 안내도</span><b>제1인문관 4층 평면도</b><span>마지막 확인 2026. 11. 27</span>')
     open(p,'w').write(h)
