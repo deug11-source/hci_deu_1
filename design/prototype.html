@@ -49,7 +49,8 @@ a{color:inherit}
 .alt button,.alt a{font-size:12px;min-height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
 .alt .on{border-color:var(--main);color:var(--main-strong);font-weight:700}
 /* 2.1 내 위치 지도 */
-.screen:not(.typing) .recent{display:none}.screen.typing .recent-hint{display:none}
+.screen:not(.typing) .recent{display:none}.screen:not(.amen) .amenl,.screen:not(.amen) .ampins{display:none}.screen.amen .recent,.screen.amen .recent-hint{display:none}
+.amenl .row{flex-direction:column;align-items:flex-start;gap:2px}.amenl .row .r{font-weight:600;line-height:1.45}.screen.typing .recent-hint{display:none}
 .pinmode{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
 .pinmode b{background:var(--accent);color:var(--text);font-size:14px;padding:6px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .pinmode i{width:4px;height:18px;background:var(--accent-ink);border-radius:2px}
@@ -80,7 +81,7 @@ body{background:#FFF5EE}
 .chip.on{background:#fff;border-color:var(--main);box-shadow:0 3px 0 #c8efe2}
 .map{background:#e2f7e6;border-radius:32px;margin:10px 12px 0;min-height:290px}
 .mapbtn{border-radius:50%;border:2px solid #fff;box-shadow:0 3px 0 #c8efe2}
-.maplabel{border-radius:999px;padding:3px 9px;left:14px;top:14px;bottom:auto}
+.maplabel{border-radius:999px;padding:3px 9px;left:14px;top:auto;bottom:36px}
 .sheet{background:var(--card);margin-top:-26px;border-radius:32px 32px 0 0;box-shadow:0 -6px 20px rgba(255,159,110,.15)}
 .grab{background:#ffd8c2;width:46px;height:6px}
 .rows{border:2px solid #ffe2d0;border-radius:22px;background:#fff}
@@ -156,6 +157,7 @@ textarea.fld::placeholder{color:var(--sub)}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="campus"><rect x="-200" y="-200" width="1400" height="1080" fill="#e2f7e6"/><g fill="#a8e2b8"><circle cx="120" cy="120" r="22"/><circle cx="160" cy="560" r="26"/><circle cx="860" cy="420" r="30"/><circle cx="940" cy="300" r="22"/><circle cx="300" cy="600" r="20"/><circle cx="80" cy="300" r="18"/><circle cx="700" cy="560" r="24"/><circle cx="900" cy="560" r="20"/><circle cx="420" cy="240" r="14"/><circle cx="250" cy="300" r="16"/></g><path d="M380 690 L412 594 L478 491 L515 410 L558 355" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M558 355 L600 322 L642 283 L690 252 L735 242 L742 205 L760 150 L790 95 L805 55" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M558 355 L470 345 L400 380 L300 440 L190 470" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M230 185 L330 165 L430 140 L520 125 L610 105 L700 80 L790 58" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M610 200 L640 260 L642 283" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><circle cx="558" cy="355" r="24" fill="#fff"/><circle cx="558" cy="355" r="10" fill="#c9f0d4"/><rect x="761" y="54" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="785" y="81" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">1</text><rect x="696" y="56" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="720" y="83" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">2</text><rect x="821" y="58" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="845" y="85" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">3</text><rect x="864" y="99" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="888" y="126" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">5</text><rect x="676" y="84" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="700" y="111" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">6</text><rect x="663" y="111" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="687" y="138" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">7</text><rect x="611" y="144" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="635" y="171" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">8</text><rect x="568" y="104" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="592" y="131" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">9</text><rect x="526" y="131" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="550" y="158" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">10</text><rect x="432.5" y="158" width="91" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="478" y="181" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">11</text><text x="478" y="201" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">효민체육관</text><rect x="527.5" y="176" width="91" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="573" y="199" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">12</text><text x="573" y="219" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">중앙도서관</text><rect x="670" y="201" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="694" y="228" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">13</text><rect x="756" y="246" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="780" y="273" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">14</text><rect x="638" y="268" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="662" y="295" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">15</text><rect x="575.5" y="344" width="91" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="621" y="367" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">16</text><text x="621" y="387" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">생활과학관</text><rect x="523.0" y="416" width="64" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="555" y="439" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">17</text><text x="555" y="459" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">음악관</text><rect x="436.0" y="268" width="64" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="468" y="291" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">18</text><text x="468" y="311" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">창의관</text><rect x="427.0" y="316" width="64" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="459" y="339" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">19</text><text x="459" y="359" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">지천관</text><rect x="311.5" y="334" width="91" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="357" y="357" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">20</text><text x="357" y="377" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">산학협력관</text><rect x="261.0" y="406" width="64" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="293" y="429" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">21</text><text x="293" y="449" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">건윤관</text><rect x="308.0" y="276" width="64" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="340" y="299" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">22</text><text x="340" y="319" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">공학관</text><rect x="134.5" y="384" width="91" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="180" y="407" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">23</text><text x="180" y="427" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">정보공학관</text><rect x="195.5" y="146" width="121" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="256" y="169" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">24</text><text x="256" y="189" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">제1효민생활관</text><rect x="339.5" y="114" width="121" height="50" rx="16" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="400" y="137" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">25</text><text x="400" y="157" text-anchor="middle" font-size="14" font-weight="800" fill="#3d4d49">학생군사교육단</text><rect x="693" y="146" width="48" height="38" rx="14" fill="#c9f0d4" stroke="#fff" stroke-width="3"/><text x="717" y="173" text-anchor="middle" font-size="22" font-weight="900" fill="#1d2b28">26</text><g font-size="15" font-weight="800" fill="#5b6b67" text-anchor="middle"><text x="530" y="392">로터리</text><text x="440" y="612">정문 방향</text></g></g></defs></svg>
 <!-- 화면은 여기에 하나씩 추가: <section class="screen" id="1.0" data-name="홈"> ... </section> -->
 <section class="screen" id="2.1" data-name="내 위치 지도" data-state="normal">
   <div class="status"><span>9:41</span><span>●●●</span></div>
@@ -168,31 +170,15 @@ textarea.fld::placeholder{color:var(--sub)}
     <div class="chips" role="radiogroup" aria-label="검색 종류">
       <button type="button" class="chip on tap" onclick="pick(this)">강의실</button>
       <button type="button" class="chip tap" onclick="pick(this)">건물</button>
-      <button type="button" class="chip tap" onclick="pick(this)">편의시설</button>
+      <button type="button" class="chip tap" onclick="pick(this)" data-amen="1">편의시설</button>
     </div>
     <div class="hint bad" data-v="noresult">‘1001호’를 찾지 못했어요. 호수를 다시 확인하고 검색해 주세요.</div>
   </form>
   <div class="map">
-    <svg viewBox="0 0 390 320" role="img" aria-label="캠퍼스 안내도와 내 위치">
-      <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
-      <path d="M120 330 C140 280 170 250 210 200 S250 90 240 -10" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
-      <g fill="#a8e2b8"><circle cx="150" cy="60" r="9"/><circle cx="166" cy="70" r="7"/><circle cx="350" cy="250" r="9"/><circle cx="20" cy="140" r="8"/><circle cx="215" cy="290" r="7"/></g>
-      <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
-        <rect x="40" y="70" width="80" height="54" rx="22" fill="#c9f0d4"/><text x="80" y="102">13</text>
-        <rect x="270" y="30" width="86" height="60" rx="22" fill="#c9f0d4"/><text x="313" y="65">26</text>
-        <rect x="262" y="160" width="74" height="54" rx="22" fill="#c9f0d4"/><text x="299" y="192">15</text>
-        <rect x="30" y="170" width="70" height="44" rx="22" fill="#ffe2d0"/><text x="65" y="197">정문</text>
-      </g>
-      <g data-v-svg="me">
-        <path d="M168 236 L146 190 A50 50 0 0 1 194 192 Z" fill="#2f6fe4" fill-opacity=".28"/>
-        <circle cx="168" cy="236" r="26" fill="#2f6fe4" fill-opacity=".18"/>
-        <circle cx="168" cy="236" r="10" fill="#2f6fe4" stroke="#fff" stroke-width="4"/>
-        <rect x="184" y="222" width="64" height="26" rx="13" fill="#fff"/><text x="216" y="240" text-anchor="middle" font-size="13" font-weight="800" fill="#1d2b28">내 위치</text>
-      </g>
-    </svg>
+    <svg viewBox="300 40 640 560" preserveAspectRatio="xMidYMid slice" role="img" aria-label="동의대 가야캠퍼스 지도와 내 위치"><use href="#campus"/><g class="ampins"><g transform="translate(763 42)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">🏦</text></g><g transform="translate(910 87)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">🏪</text></g><g transform="translate(528 119)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">🏪</text></g><g transform="translate(572 119)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">☕</text></g><g transform="translate(613 132)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">🏪</text></g><g transform="translate(657 132)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">☕</text></g><g transform="translate(318 264)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">🏪</text></g><g transform="translate(362 264)"><circle r="24" fill="#fff" stroke="#ff9f6e" stroke-width="4"/><text y="9" text-anchor="middle" font-size="26">☕</text></g></g><g data-v-svg="me"><g transform="translate(478 491) rotate(20)"><path d="M0 0 L-26 -62 A66 66 0 0 1 26 -62 Z" fill="#2f6fe4" fill-opacity=".28"/></g><circle cx="478" cy="491" r="34" fill="#2f6fe4" fill-opacity=".16"/><circle cx="478" cy="491" r="13" fill="#2f6fe4" stroke="#fff" stroke-width="5"/><rect x="500" y="474" width="92" height="34" rx="17" fill="#fff"/><text x="546" y="497" text-anchor="middle" font-size="17" font-weight="800" fill="#1d2b28">내 위치</text></g></svg>
     <div class="pinmode" data-v="pin"><b>여기서 출발</b><i></i></div>
     <button class="mapbtn tap" style="top:14px" aria-label="내 위치로" onclick="toast('내 위치로 이동했어요')">⊕</button>
-    <span class="maplabel">캠퍼스 안내도 자리 (예시)</span>
+    <span class="maplabel">동의대 캠퍼스맵 참고 · 경로는 예시</span>
   </div>
   <div class="sheet">
     <div class="grab"></div>
@@ -201,6 +187,12 @@ textarea.fld::placeholder{color:var(--sub)}
       <button class="btn tap" onclick="toast('출발 위치를 정했어요');setState(this,'normal')">여기서 출발</button>
     </div>
     <div data-v="list" style="display:flex;flex-direction:column;gap:10px">
+      <div class="label amenl">편의시설 · 동의대 복지문화시설 안내 기준</div>
+      <div class="rows amenl">
+        <div class="row"><b>🏪 편의점</b><span class="r">제2인문관(10) · 공학관(22) B1·1층 · 수덕전(8) 2층 · 국제관(5) 1층</span></div>
+        <div class="row"><b>☕ 카페</b><span class="r">제2인문관(10) 1층 할리스·스파지오 · 공학관(22) 1층 투썸 · 수덕전(8) 1층 골든벨</span></div>
+        <div class="row"><b>🏦 은행·ATM</b><span class="r">대학본관(1) 1층 국민은행 · ATM 국제관·수덕전·제2인문관·공학관</span></div>
+      </div>
       <div class="label recent-hint">🔍 검색창을 누르면 최근 검색이 펼쳐져요</div>
       <div class="label recent">최근 검색</div>
       <div class="rows recent">
@@ -234,24 +226,9 @@ textarea.fld::placeholder{color:var(--sub)}
     <span class="meta">검색 결과</span>
   </div>
   <div class="map" style="margin-top:0">
-    <svg viewBox="0 0 390 320" role="img" aria-label="목적지 26번 건물과 내 위치">
-      <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
-      <path d="M120 330 C140 280 170 250 210 200 S250 90 240 -10" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
-      <g fill="#a8e2b8"><circle cx="150" cy="60" r="9"/><circle cx="166" cy="70" r="7"/><circle cx="350" cy="250" r="9"/><circle cx="20" cy="140" r="8"/><circle cx="215" cy="290" r="7"/></g>
-      <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
-        <rect x="40" y="70" width="80" height="54" rx="22" fill="#c9f0d4"/><text x="80" y="102">13</text>
-        <rect x="262" y="160" width="74" height="54" rx="22" fill="#c9f0d4"/><text x="299" y="192">15</text>
-        <rect x="30" y="170" width="70" height="44" rx="22" fill="#ffe2d0"/><text x="65" y="197">정문</text>
-      </g>
-      <path d="M168 236 C200 215 215 190 240 150 S285 105 300 92" fill="none" stroke="#14a38b" stroke-width="5" stroke-dasharray="2 10" stroke-linecap="round"/>
-      <rect x="266" y="26" width="94" height="66" rx="24" fill="#ff9f6e"/>
-      <text x="313" y="56" text-anchor="middle" font-size="15" font-weight="800" fill="#1d2b28">26</text>
-      <text x="313" y="76" text-anchor="middle" font-size="12" font-weight="800" fill="#1d2b28">목적지</text>
-      <circle cx="168" cy="236" r="22" fill="#2f6fe4" fill-opacity=".18"/>
-      <circle cx="168" cy="236" r="9" fill="#2f6fe4" stroke="#fff" stroke-width="4"/>
-    </svg>
+    <svg viewBox="400 110 460 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="목적지 26번 건물과 내 위치"><use href="#campus"/><path d="M478 491 L515 410 L552 358 L600 322 L642 283 L690 252 L735 242 L742 205 L722 192" fill="none" stroke="#0e7f6c" stroke-width="7" stroke-dasharray="2 14" stroke-linecap="round"/><rect x="677" y="148" width="80" height="54" rx="18" fill="#ff9f6e" stroke="#fff" stroke-width="4"/><text x="717" y="176" text-anchor="middle" font-size="20" font-weight="900" fill="#1d2b28">26</text><text x="717" y="195" text-anchor="middle" font-size="13" font-weight="800" fill="#1d2b28">목적지</text><g transform="translate(478 491) rotate(20)"><path d="M0 0 L-26 -62 A66 66 0 0 1 26 -62 Z" fill="#2f6fe4" fill-opacity=".28"/></g><circle cx="478" cy="491" r="34" fill="#2f6fe4" fill-opacity=".16"/><circle cx="478" cy="491" r="13" fill="#2f6fe4" stroke="#fff" stroke-width="5"/></svg>
     <button class="mapbtn tap" style="bottom:40px" aria-label="내 위치로" onclick="toast('내 위치로 이동했어요')">⊕</button>
-    <span class="maplabel">캠퍼스 안내도 자리 (예시)</span>
+    <span class="maplabel">동의대 캠퍼스맵 참고 · 경로는 예시</span>
   </div>
   <div class="sheet">
     <div class="grab"></div>
@@ -295,24 +272,9 @@ textarea.fld::placeholder{color:var(--sub)}
   <div class="navb wa" data-v="wrong"><span class="ar">🙅</span><div><div class="t">여긴 25번 건물이에요</div><div class="d">목적지는 붙어 있는 옆 26번 건물 · 다시 안내할게요</div></div></div>
   <div class="navb" data-v="ent"><span class="ar">🚪</span><div><div class="t">26번 건물 입구에 도착했어요</div><div class="d">층별 지도로 이어서 안내해요</div></div></div>
   <div class="map" style="margin-top:-22px">
-    <svg viewBox="0 0 390 320" role="img" aria-label="경로 안내 지도, 내 위치와 바라보는 방향">
-      <g fill="#a8e2b8"><circle cx="150" cy="60" r="9"/><circle cx="166" cy="70" r="7"/><circle cx="350" cy="250" r="9"/><circle cx="20" cy="140" r="8"/></g>
-      <path d="M-10 250 C80 230 150 240 210 200 S320 120 400 110" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
-      <g font-size="13" font-weight="800" fill="#5b6b67" text-anchor="middle">
-        <rect x="40" y="90" width="80" height="54" rx="22" fill="#c9f0d4"/><text x="80" y="122">13</text>
-        <rect x="230" y="150" width="84" height="60" rx="22" fill="#c9f0d4"/><text x="272" y="186">15</text>
-      </g>
-      <rect x="270" y="36" width="94" height="66" rx="24" fill="#ff9f6e"/>
-      <text x="317" y="66" text-anchor="middle" font-size="15" font-weight="800" fill="#1d2b28">26</text>
-      <text x="317" y="86" text-anchor="middle" font-size="12" font-weight="800" fill="#1d2b28">목적지</text>
-      <path d="M120 300 L150 262" fill="none" stroke="#b9c9c4" stroke-width="9" stroke-linecap="round"/>
-      <g data-v-svg="m1"><path d="M150 262 C190 230 230 220 262 205 S300 140 312 104" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round"/><path d="M150 262 C190 230 230 220 262 205 S300 140 312 104" fill="none" stroke="#14a38b" stroke-width="9" stroke-linecap="round"/></g>
-      <g data-v-svg="m2"><path d="M150 262 C190 230 220 215 245 200" fill="none" stroke="#14a38b" stroke-width="9" stroke-linecap="round"/><path d="M245 200 L290 160" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 9" stroke-linecap="round"/><path d="M290 160 S305 130 312 104" fill="none" stroke="#14a38b" stroke-width="9" stroke-linecap="round"/><rect x="186" y="150" width="64" height="22" rx="11" fill="#fff"/><text x="218" y="166" text-anchor="middle" font-size="12" font-weight="800" fill="#9a4a1c">실내 통로</text></g>
-      <path d="M150 262 L128 214 A48 48 0 0 1 176 216 Z" fill="#2f6fe4" fill-opacity=".28"/>
-      <circle cx="150" cy="262" r="11" fill="#2f6fe4" stroke="#fff" stroke-width="4"/>
-    </svg>
+    <svg viewBox="440 150 400 380" preserveAspectRatio="xMidYMid slice" role="img" aria-label="경로 안내 지도, 내 위치와 바라보는 방향"><use href="#campus"/><path d="M478 491 L515 410 L552 358" fill="none" stroke="#b9c9c4" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><g data-v-svg="m1"><path d="M552 358 L600 322 L642 283 L690 252 L735 242 L742 205 L722 192" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M552 358 L600 322 L642 283 L690 252 L735 242 L742 205 L722 192" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></g><g data-v-svg="m2"><path d="M552 358 L600 322 L635 300" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round"/><path d="M635 300 L662 282 L690 252" fill="none" stroke="#ff9f6e" stroke-width="11" stroke-dasharray="3 12" stroke-linecap="round"/><path d="M690 252 L735 242 L742 205 L722 192" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><rect x="560" y="250" width="92" height="30" rx="15" fill="#fff"/><text x="606" y="271" text-anchor="middle" font-size="15" font-weight="800" fill="#9a4a1c">실내 통로</text></g><rect x="677" y="148" width="80" height="54" rx="18" fill="#ff9f6e" stroke="#fff" stroke-width="4"/><text x="717" y="176" text-anchor="middle" font-size="20" font-weight="900" fill="#1d2b28">26</text><text x="717" y="195" text-anchor="middle" font-size="13" font-weight="800" fill="#1d2b28">목적지</text><g transform="translate(552 358) rotate(40)"><path d="M0 0 L-26 -62 A66 66 0 0 1 26 -62 Z" fill="#2f6fe4" fill-opacity=".28"/></g><circle cx="552" cy="358" r="34" fill="#2f6fe4" fill-opacity=".16"/><circle cx="552" cy="358" r="13" fill="#2f6fe4" stroke="#fff" stroke-width="5"/></svg>
     <button class="mapbtn tap" style="bottom:40px" aria-label="내 위치로 지도 맞추기" onclick="toast('내 위치로 지도를 맞췄어요')">◎</button>
-    <span class="maplabel" style="top:auto;bottom:40px">캠퍼스 안내도 자리 (예시)</span>
+    <span class="maplabel" style="top:auto;bottom:40px">동의대 캠퍼스맵 참고 · 경로는 예시</span>
   </div>
   <div class="sheet">
     <div class="grab"></div>
@@ -474,6 +436,6 @@ function go12(st){const t=document.getElementById("1.2");if(t){t.dataset.state=s
 let PREV="#2.1";addEventListener("hashchange",e=>{const from=new URL(e.oldURL).hash;if(location.hash==="#3.0"&&from&&from!=="#3.0")PREV=from});
 function goBack(){location.hash=PREV}
 function sendReport(b){const sc=b.closest(".screen"),t=sc.querySelector("textarea");if(!t.value.trim()){setState(b,"empty");t.focus();return}setState(b,"normal");t.value="";toast("제보를 보냈어요. 운영진이 확인한 뒤 반영해요");setTimeout(goBack,1300)}
-function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b))}
+function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b));b.closest(".screen").classList.toggle("amen",!!b.dataset.amen)}
 function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}
 </script></body></html>
