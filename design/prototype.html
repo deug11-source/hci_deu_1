@@ -154,6 +154,21 @@ body{background:#FFF5EE}
 textarea.fld{min-height:96px;padding:12px 14px;resize:none;font:inherit;font-size:14px;cursor:text}
 textarea.fld::placeholder{color:var(--sub)}
 .errmsg{font-size:14px;color:var(--accent-ink);font-weight:700}
+.ropt{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left;background:#fff;border:2px solid #c8efe2;border-radius:20px;padding:12px 14px;font:inherit;color:var(--text);cursor:pointer}
+.ropt b{font-size:16px;font-weight:800}
+.ropt span{font-size:14px;color:var(--sub)}
+.ropt em{font-style:normal;font-size:12px;font-weight:800;color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;padding:2px 8px;margin-top:4px}
+.ropt.best{border-color:var(--accent)}
+.steps{margin:0;padding:10px 12px;list-style:none;background:#fff;border-radius:18px;border:2px dashed #ffd8c2;font-size:14px;line-height:1.45;display:flex;flex-direction:column;gap:6px}
+.steps .h{font-size:12px;font-weight:800;color:var(--sub)}
+.steps li{display:flex;gap:8px;color:var(--sub)}
+.steps li i{font-style:normal;flex:none;width:22px;height:22px;border-radius:50%;background:#eef3f1;color:var(--sub);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+[data-state="lib0"] .steps li:nth-of-type(1),[data-state="sud0"] .steps li:nth-of-type(1),[data-state="shortcut"] .steps li:nth-of-type(2),[data-state="shortcut2"] .steps li:nth-of-type(2){color:var(--text);font-weight:800}
+[data-state="lib0"] .steps li:nth-of-type(1) i,[data-state="sud0"] .steps li:nth-of-type(1) i,[data-state="shortcut"] .steps li:nth-of-type(2) i,[data-state="shortcut2"] .steps li:nth-of-type(2) i{background:var(--main-strong);color:#fff}
+[data-name="경로 안내"][data-state="normal"] .prog i,[data-name="경로 안내"][data-state="jump"] .prog i,[data-name="경로 안내"][data-state="lib0"] .prog i,[data-name="경로 안내"][data-state="sud0"] .prog i{width:4%}
+[data-name="경로 안내"][data-state="shortcut"] .prog i{width:35%}
+[data-name="경로 안내"][data-state="shortcut2"] .prog i{width:60%}
+[data-name="경로 안내"][data-state="entrance"] .prog i{width:100%}
 </style></head><body>
 <button id="idx">화면 목록</button><div id="list"></div>
 <div class="device">
@@ -225,7 +240,7 @@ textarea.fld::placeholder{color:var(--sub)}
     <span class="meta">검색 결과</span>
   </div>
   <div class="map" style="margin-top:0">
-    <svg viewBox="250 450 560 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="목적지 제1인문관, 바깥길과 엘리베이터 지름길 두 개"><use href="#campus"/><path d="M498 478 L470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#0e7f6c" stroke-width="7" stroke-dasharray="2 14" stroke-linecap="round" stroke-linejoin="round"/><path d="M470 600 L470 690 L530 712" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M530 712 L590 735" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M590 735 L640 830 L655 945" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M458 760 L470 848 L500 858" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M500 858 L555 866" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M555 866 L630 900 L650 945" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><g><rect x="572.5" y="674" width="155" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="650" y="696" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">도서관 EV 5층</text></g><g><rect x="522.5" y="804" width="155" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="600" y="826" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">수덕전 EV 5층</text></g><g><rect x="574" y="947" width="172" height="56" rx="20" fill="#ff9f6e" stroke="#fff" stroke-width="5"/><text x="660" y="984" text-anchor="middle" font-size="26" font-weight="900" fill="#1d2b28">9 제1인문관</text><rect x="612" y="902" width="96" height="38" rx="19" fill="#1d2b28"/><text x="660" y="928" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">목적지</text></g><g transform="translate(498 478) rotate(180)"><path d="M0 0 L-26 -64 A68 68 0 0 1 26 -64 Z" fill="#2f6fe4" fill-opacity=".3"/><circle r="32" fill="#2f6fe4" fill-opacity=".16"/><circle r="13" fill="#2f6fe4" stroke="#fff" stroke-width="5"/></g></svg>
+    <svg viewBox="250 450 560 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="목적지 제1인문관, 바깥길과 엘리베이터 지름길 두 개"><use href="#campus"/><g data-v-svg="rt"><path d="M498 478 L470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#0e7f6c" stroke-width="7" stroke-dasharray="2 14" stroke-linecap="round" stroke-linejoin="round"/><path d="M470 600 L470 690 L530 712" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M530 712 L590 735" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M590 735 L640 830 L655 945" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M458 760 L470 848 L500 858" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M500 858 L555 866" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M555 866 L630 900 L650 945" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><g><rect x="572.5" y="674" width="155" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="650" y="696" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">도서관 EV 5층</text></g><g><rect x="522.5" y="804" width="155" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="600" y="826" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">수덕전 EV 5층</text></g></g><g><rect x="574" y="947" width="172" height="56" rx="20" fill="#ff9f6e" stroke="#fff" stroke-width="5"/><text x="660" y="984" text-anchor="middle" font-size="26" font-weight="900" fill="#1d2b28">9 제1인문관</text><rect x="612" y="902" width="96" height="38" rx="19" fill="#1d2b28"/><text x="660" y="928" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">목적지</text></g><g transform="translate(498 478) rotate(180)"><path d="M0 0 L-26 -64 A68 68 0 0 1 26 -64 Z" fill="#2f6fe4" fill-opacity=".3"/><circle r="32" fill="#2f6fe4" fill-opacity=".16"/><circle r="13" fill="#2f6fe4" stroke="#fff" stroke-width="5"/></g></svg>
     <button class="mapbtn tap" style="bottom:40px" aria-label="내 위치로" onclick="toast('내 위치로 이동했어요')">⊕</button>
     <span class="maplabel" style="top:14px;bottom:auto">네이버지도 참고 · 경로는 예시</span>
   </div>
@@ -236,15 +251,26 @@ textarea.fld::placeholder{color:var(--sub)}
       <h2>제1인문관 · 401호</h2>
       <div class="floor"><b>4층</b> · 지도에서 피치색으로 표시한 건물 (9번)</div>
     </div>
-    <div class="dist"><b>약 520 m</b><span>도보 8분</span><span class="up">오르막 있음</span></div>
+    <div class="dist" data-v="dist"><b>약 520 m</b><span>도보 8분</span><span class="up">오르막 있음</span></div>
+    <div class="dist" data-v="inb"><b>4층까지</b><span>건물 안 안내</span></div>
     <div class="where no" data-v="away"><i>📍</i><div>지금 <b>지천관 앞 로터리</b>에 있어요. 목적지 건물이 아니에요.</div></div>
     <div class="where nb" data-v="neighbor"><i>👉</i><div>지금 <b>제2인문관</b>에 있어요. 목적지는 붙어 있는 <b>제1인문관</b>이에요.</div></div>
     <div class="where ok" data-v="here"><i>✅</i><div><b>지금 이 건물이에요.</b> 층별 지도로 강의실까지 안내해요.</div></div>
     <div class="btns">
-      <a class="btn tap" href="#2.0" data-v="away">길찾기 시작</a>
+      <button class="btn tap" data-v="away" onclick="setState(this,'route')">길찾기 시작</button>
       <a class="btn tap" href="#2.2" data-v="neighbor">연결 통로로 길찾기</a>
       <a class="btn tap" href="#2.2" data-v="here">층별 지도 보기</a>
       <a class="btn ghost tap" href="#2.3">주변 보기</a>
+    </div>
+  </div>
+  <div class="dim" data-v="route">
+    <div class="dialog" role="dialog" aria-label="길 고르기">
+      <h3>어느 길로 갈까요?</h3>
+      <p>제1인문관까지 가는 길이 3개 있어요. 지름길은 건물 엘리베이터로 5층에 올라가 5층 출입구로 나가는 길이에요.</p>
+      <button class="ropt best tap" onclick="goRoute('lib0')"><b>중앙도서관 엘리베이터 지름길</b><span>약 400 m · 6분</span><em>가장 빨라요</em></button>
+      <button class="ropt tap" onclick="goRoute('sud0')"><b>수덕전 엘리베이터 지름길</b><span>약 420 m · 7분</span></button>
+      <button class="ropt tap" onclick="goRoute('normal')"><b>큰길로 가기</b><span>약 520 m · 8분 · 오르막 있음</span></button>
+      <button class="btn ghost tap" onclick="setState(this,'normal')">취소</button>
     </div>
   </div>
   <div class="dim" data-v="confirm">
@@ -272,23 +298,41 @@ textarea.fld::placeholder{color:var(--sub)}
   <div class="navb wa" data-v="wrong"><span class="ar">🙅</span><div><div class="t">여긴 제2인문관이에요</div><div class="d">목적지는 붙어 있는 제1인문관 · 다시 안내할게요</div></div></div>
   <div class="navb" data-v="ent"><span class="ar">🚪</span><div><div class="t">제1인문관 입구에 도착했어요</div><div class="d">층별 지도로 이어서 안내해요</div></div></div>
   <div class="map" style="margin-top:-22px">
-    <svg viewBox="190.0 271 560 470" preserveAspectRatio="xMidYMid slice" role="img" aria-label="경로 안내 지도, 바라보는 방향이 위쪽"><g transform="rotate(-184 470 600)"><use href="#campusR"/><path d="M498 478 L470 600" fill="none" stroke="#b9c9c4" stroke-width="12" stroke-linecap="round"/><g data-v-svg="m1"><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M470 600 L470 690 L530 712" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M530 712 L590 735" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M590 735 L640 830 L655 945" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M458 760 L470 848 L500 858" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><path d="M500 858 L555 866" fill="none" stroke="#ff9f6e" stroke-width="9" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M555 866 L630 900 L650 945" fill="none" stroke="#ff9f6e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 12"/><g transform="rotate(184 660 700)"><rect x="552.5" y="684" width="215" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="660" y="706" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">지름길 도서관 EV 5층</text></g><g transform="rotate(184 610 830)"><rect x="502.5" y="814" width="215" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="610" y="836" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">지름길 수덕전 EV 5층</text></g></g><g data-v-svg="m2"><path d="M470 600 L470 690 L530 712" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><path d="M530 712 L590 735" fill="none" stroke="#ff9f6e" stroke-width="13" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M590 735 L640 830 L655 945" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><g transform="rotate(184 660 700)"><rect x="590.0" y="684" width="140" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="660" y="706" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">엘리베이터 5층</text></g></g><g data-v-svg="m3"><path d="M470 600 L458 760" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round"/><path d="M458 760 L470 848 L500 858" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><path d="M500 858 L555 866" fill="none" stroke="#ff9f6e" stroke-width="13" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M555 866 L630 900 L650 945" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><g transform="rotate(184 610 830)"><rect x="540.0" y="814" width="140" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="610" y="836" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">엘리베이터 5층</text></g></g><g transform="rotate(184 660 975)"><rect x="574" y="947" width="172" height="56" rx="20" fill="#ff9f6e" stroke="#fff" stroke-width="5"/><text x="660" y="984" text-anchor="middle" font-size="26" font-weight="900" fill="#1d2b28">9 제1인문관</text><rect x="612" y="902" width="96" height="38" rx="19" fill="#1d2b28"/><text x="660" y="928" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">목적지</text></g></g><g transform="translate(470 600)"><path d="M0 0 L-26 -64 A68 68 0 0 1 26 -64 Z" fill="#2f6fe4" fill-opacity=".3"/><circle r="32" fill="#2f6fe4" fill-opacity=".16"/><circle r="13" fill="#2f6fe4" stroke="#fff" stroke-width="5"/></g></svg>
+    <svg viewBox="190.0 271 560 470" preserveAspectRatio="xMidYMid slice" role="img" aria-label="경로 안내 지도, 바라보는 방향이 위쪽"><g transform="rotate(-184 470 600)"><use href="#campusR"/><path d="M498 478 L470 600" fill="none" stroke="#b9c9c4" stroke-width="12" stroke-linecap="round"/><g data-v-svg="m1"><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></g><g data-v-svg="m2"><path d="M470 600 L470 690 L530 712" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><path d="M530 712 L590 735" fill="none" stroke="#ff9f6e" stroke-width="13" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M590 735 L640 830 L655 945" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><g transform="rotate(184 660 700)"><rect x="590.0" y="684" width="140" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="660" y="706" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">엘리베이터 5층</text></g></g><g data-v-svg="m3"><path d="M470 600 L458 760" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round"/><path d="M458 760 L470 848 L500 858" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><path d="M500 858 L555 866" fill="none" stroke="#ff9f6e" stroke-width="13" stroke-dasharray="3 11" stroke-linecap="round"/><path d="M555 866 L630 900 L650 945" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" /><g transform="rotate(184 610 830)"><rect x="540.0" y="814" width="140" height="32" rx="16" fill="#fff" stroke="#ff9f6e" stroke-width="2.5"/><text x="610" y="836" text-anchor="middle" font-size="16" font-weight="800" fill="#9a4a1c">엘리베이터 5층</text></g></g><g transform="rotate(184 660 975)"><rect x="574" y="947" width="172" height="56" rx="20" fill="#ff9f6e" stroke="#fff" stroke-width="5"/><text x="660" y="984" text-anchor="middle" font-size="26" font-weight="900" fill="#1d2b28">9 제1인문관</text><rect x="612" y="902" width="96" height="38" rx="19" fill="#1d2b28"/><text x="660" y="928" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">목적지</text></g></g><g transform="translate(470 600)"><path d="M0 0 L-26 -64 A68 68 0 0 1 26 -64 Z" fill="#2f6fe4" fill-opacity=".3"/><circle r="32" fill="#2f6fe4" fill-opacity=".16"/><circle r="13" fill="#2f6fe4" stroke="#fff" stroke-width="5"/></g></svg>
     <button class="mapbtn tap" style="bottom:40px" aria-label="내 위치로 지도 맞추기" onclick="toast('내 위치로 지도를 맞췄어요')">◎</button>
     <span class="maplabel" style="top:auto;bottom:40px">네이버지도 참고 · 경로는 예시</span>
   </div>
   <div class="sheet">
     <div class="grab"></div>
-    <div class="remain" data-v="r1"><b>남은 거리 360 m</b><span>약 6분</span></div>
+    <div class="remain" data-v="r1"><b>남은 거리 520 m</b><span>약 8분</span></div>
+    <div class="remain" data-v="rl0"><b>남은 거리 400 m</b><span>약 6분 · 지름길</span></div>
+    <div class="remain" data-v="rl1"><b>남은 거리 240 m</b><span>약 4분 · 지름길</span></div>
+    <div class="remain" data-v="rs0"><b>남은 거리 420 m</b><span>약 7분 · 지름길</span></div>
+    <div class="remain" data-v="rs1"><b>남은 거리 170 m</b><span>약 3분 · 지름길</span></div>
     <div class="remain" data-v="r2"><b>남은 거리 400 m</b><span>약 7분</span></div>
     <div class="remain" data-v="r3"><b>건물 도착!</b><span>강의실까지 4층</span></div>
     <div class="prog"><i></i></div>
-    <div class="next">다음: <b>혜안지</b>를 오른쪽에 두고 <b>상영관</b>을 지나 <b>정심정</b> 쪽으로 가면 <b>제1인문관</b></div>
+    <div class="next" data-v="nx">다음: <b>혜안지</b>를 오른쪽에 두고 <b>상영관</b>을 지나 <b>정심정</b> 쪽으로 가면 <b>제1인문관</b></div>
+    <ol class="steps" data-v="st1"><span class="h">지름길 순서 · 중앙도서관 엘리베이터</span>
+      <li><i>1</i>로터리에서 큰길 따라 중앙도서관까지 · 약 160 m</li>
+      <li><i>2</i>중앙도서관 엘리베이터로 5층</li>
+      <li><i>3</i>5층 출입구로 나가기</li>
+      <li><i>4</i>인문관 가는 길 따라 제1인문관까지</li>
+    </ol>
+    <ol class="steps" data-v="st2"><span class="h">지름길 순서 · 수덕전 엘리베이터</span>
+      <li><i>1</i>로터리에서 큰길 따라 중앙도서관을 지나 수덕전까지 · 약 250 m</li>
+      <li><i>2</i>수덕전 엘리베이터로 5층</li>
+      <li><i>3</i>5층 출입구로 나가기</li>
+      <li><i>4</i>인문관 가는 길 따라 제1인문관까지</li>
+    </ol>
     <a class="btn tap" href="#2.2" data-v="fl">층별 지도 보기</a>
     <a class="btn ghost tap" href="#2.2" data-v="fg">층별 지도 보기</a>
   </div>
   <div class="alt"><span>갈림길 모습 보기</span>
     <button class="on" onclick="setState(this,'normal')">기본</button>
+    <button onclick="setState(this,'lib0')">지름길 출발: 도서관</button>
     <button onclick="setState(this,'shortcut')">지름길: 도서관 엘리베이터</button>
+    <button onclick="setState(this,'sud0')">지름길 출발: 수덕전</button>
     <button onclick="setState(this,'shortcut2')">지름길: 수덕전 엘리베이터</button>
     <button onclick="setState(this,'offroute')">경로를 벗어남</button>
     <button onclick="setState(this,'jump')">위치가 튐</button>
@@ -300,7 +344,7 @@ textarea.fld::placeholder{color:var(--sub)}
 <section class="screen" id="2.2" data-name="건물 상세 / 층별 지도" data-state="normal">
   <div class="status"><span>9:41</span><span>●●●</span></div>
   <div class="topbar">
-    <a class="back tap" href="#2.0" aria-label="뒤로, 경로 안내">‹ 제1인문관 도착</a>
+    <a class="back tap" href="#2.0" aria-label="뒤로" onclick="event.preventDefault();location.hash=B22">‹ 뒤로</a>
     <span class="meta">층별 안내</span>
   </div>
   <div class="pad">
@@ -387,13 +431,17 @@ function show(){const id=decodeURIComponent(location.hash.slice(1));const t=S.fi
 addEventListener("hashchange",show);show();
 /* 공통: 화면 안의 갈림길 모습 바꾸기. data-v 는 그 모습에서만 보임 */
 /* 화면별 갈림길 모습: VIEWS["화면ID"][모습] = 그 모습에서 보일 data-v 목록 */
-const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away"],neighbor:["neighbor"],here:["here"],confirm:["away","confirm"]},"2.0":{normal:["go","r1","m1","fg"],shortcut:["sc","r1","m2","fg"],shortcut2:["sc2","r1","m3","fg"],offroute:["off","r2","m1","fg"],jump:["jump","r1","m1","fg"],wrong:["wrong","r2","m1","fg"],entrance:["ent","r3","m1","fl"]},"2.2":{normal:["w4","now1"],neighbor:["nb","now1"],arrive:["w4","now4","arr"]},"3.0":{normal:[],empty:["err"]}};
+const VIEWS={"2.1":{normal:["list"],noresult:["list","noresult"],perm:["list","perm"],pin:["pin"]},"1.1":{normal:["away","dist","rt"],neighbor:["neighbor","dist","rt"],here:["here","inb"],confirm:["away","dist","rt","confirm"],route:["away","dist","rt","route"]},"2.0":{normal:["go","r1","m1","fg","nx"],lib0:["go","rl0","m2","fg","st1"],shortcut:["sc","rl1","m2","fg","st1"],sud0:["go","rs0","m3","fg","st2"],shortcut2:["sc2","rs1","m3","fg","st2"],offroute:["off","r2","m1","fg","nx"],jump:["jump","r1","m1","fg","nx"],wrong:["wrong","r2","m1","fg","nx"],entrance:["ent","r3","m1","fl","nx"]},"2.2":{normal:["w4","now1"],neighbor:["nb","now1"],arrive:["w4","now4","arr"]},"3.0":{normal:[],empty:["err"]}};
 function setState(el,st){const s=el.closest(".screen");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")))}
 function paint(s){const on=(VIEWS[s.id]||{})[s.dataset.state]||[];s.querySelectorAll("[data-v]").forEach(e=>e.style.display=on.includes(e.dataset.v)?"":"none");const me=s.querySelector('[data-v-svg="me"]');if(me)me.style.display=s.dataset.state==="pin"?"none":"";s.querySelectorAll('[data-v-svg]:not([data-v-svg="me"])').forEach(g=>g.style.display=on.includes(g.dataset.vSvg)?"":"none")}
 S.forEach(s=>{if(s.dataset.state)paint(s)});
 function floorPick(b,k,label){const sc=b.closest(".screen");sc.querySelectorAll(".floors button").forEach(x=>x.classList.toggle("on",x===b));sc.querySelectorAll("[data-plan]").forEach(d=>d.style.display=d.dataset.plan===k?"block":"none");sc.querySelector(".plan .fl").textContent=label+" 평면도"}
 let PREV="#2.1";addEventListener("hashchange",e=>{const from=new URL(e.oldURL).hash;if(location.hash==="#3.0"&&from&&from!=="#3.0")PREV=from});
 function goBack(){location.hash=PREV}
+/* 2.2 뒤로: 들어온 화면(1.1 또는 2.0)으로 */
+let B22="#2.0";addEventListener("hashchange",e=>{const f=new URL(e.oldURL).hash;if(location.hash==="#2.2"&&(f==="#1.1"||f==="#2.0"))B22=f});
+/* 1.1 길 고르기 → 2.0 을 고른 길로 시작 */
+function goRoute(st){const s=document.getElementById("2.0");s.dataset.state=st;paint(s);s.querySelectorAll(".alt button").forEach(b=>b.classList.toggle("on",(b.getAttribute("onclick")||"").includes("'"+st+"'")));const d=document.getElementById("1.1");d.dataset.state="normal";paint(d);location.hash="#2.0"}
 function sendReport(b){const sc=b.closest(".screen"),t=sc.querySelector("textarea");if(!t.value.trim()){setState(b,"empty");t.focus();return}setState(b,"normal");t.value="";toast("제보를 보냈어요. 운영진이 확인한 뒤 반영해요");setTimeout(goBack,1300)}
 function pick(b){b.parentNode.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b));b.closest(".screen").classList.toggle("amen",!!b.dataset.amen)}
 function s21search(f){const q=f.q.value.trim();if(!q){toast("강의실 호수를 입력해 주세요");f.q.focus();return}location.hash="#1.1"}

@@ -69,9 +69,9 @@ svg21=('<svg viewBox="200 330 640 560" preserveAspectRatio="xMidYMid slice" role
        f'<use href="#campus"/><g class="ampins">{pins}</g>'
        f'<g data-v-svg="me">{ME(498,478,180)}<rect x="522" y="470" width="88" height="32" rx="16" fill="#fff"/><text x="566" y="492" text-anchor="middle" font-size="16" font-weight="800" fill="#1d2b28">내 위치</text></g></svg>')
 svg11=('<svg viewBox="250 450 560 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="목적지 제1인문관, 바깥길과 엘리베이터 지름길 두 개">'
-       '<use href="#campus"/>'
+       '<use href="#campus"/><g data-v-svg="rt">'
        f'<path d="{MAIN}" fill="none" stroke="#0e7f6c" stroke-width="7" stroke-dasharray="2 14" stroke-linecap="round" stroke-linejoin="round"/>'
-       +sc_paths(SC_LIB,7)+sc_paths(SC_SUD,7)+tag(650,690,'도서관 EV 5층')+tag(600,820,'수덕전 EV 5층')
+       +sc_paths(SC_LIB,7)+sc_paths(SC_SUD,7)+tag(650,690,'도서관 EV 5층')+tag(600,820,'수덕전 EV 5층')+'</g>'
        +DEST()+ME(498,478,180)+'</svg>')
 # 2.0 heading-up: me fixed at bottom-centre, map rotated so travel direction points up
 mx,my=470,600; VW,VH=560,470
@@ -79,8 +79,7 @@ rot=f'rotate({-H} {mx} {my})'
 svg20=(f'<svg viewBox="{mx-VW/2} {my-VH*0.70:.0f} {VW} {VH}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="경로 안내 지도, 바라보는 방향이 위쪽">'
        f'<g transform="{rot}"><use href="#campusR"/>'
        '<path d="M498 478 L470 600" fill="none" stroke="#b9c9c4" stroke-width="12" stroke-linecap="round"/>'
-       '<g data-v-svg="m1"><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>'
-       +sc_paths(SC_LIB,7)+sc_paths(SC_SUD,7)+tag(660,700,'지름길 도서관 EV 5층',H)+tag(610,830,'지름길 수덕전 EV 5층',H)+'</g>'
+       '<g data-v-svg="m1"><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/><path d="M470 600 L458 760 L455 860 L440 990 L490 1035 L600 990" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></g>'
        '<g data-v-svg="m2">'+sc_paths(SC_LIB,11,True)+tag(660,700,'엘리베이터 5층',H)+'</g>'
        '<g data-v-svg="m3"><path d="M470 600 L458 760" fill="none" stroke="#14a38b" stroke-width="11" stroke-linecap="round"/>'+sc_paths(SC_SUD,11,True)+tag(610,830,'엘리베이터 5층',H)+'</g>'
        +DEST(H)+'</g>'
