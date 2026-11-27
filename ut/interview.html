@@ -1,0 +1,178 @@
+<title>여기맞캠? 인터뷰지</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: 한 장짜리 진행 순서 서식. 읽어 줄 문장(인용 상자)과 적는 칸(점선)을 모양으로 구분 */
+:root{
+  --bg:#f3f6f4; --paper:#ffffff; --ink:#1d2b28; --sub:#56665f; --line:#cfdcd6;
+  --mint:#0e7f6c; --mint-soft:#e4f4ef; --peach-soft:#fff1e8; --peach-ink:#8f4519;
+  --say:#f6faf8;
+  --body:"Noto Sans KR",system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121816; --paper:#1a2220; --ink:#e6eeeb; --sub:#a7b6b0; --line:#34413d;
+  --mint:#5fd0b8; --mint-soft:#1d3530; --peach-soft:#3a2a20; --peach-ink:#ffc49f; --say:#1f2927; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121816; --paper:#1a2220; --ink:#e6eeeb; --sub:#a7b6b0; --line:#34413d;
+  --mint:#5fd0b8; --mint-soft:#1d3530; --peach-soft:#3a2a20; --peach-ink:#ffc49f; --say:#1f2927; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.sheet{max-width:760px;margin:0 auto;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:clamp(20px,4vw,40px);display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--mint)}
+h1{margin:0;font-size:clamp(24px,4.5vw,30px);font-weight:900;line-height:1.25;text-wrap:balance}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px 16px;font-size:14px}
+.meta span{display:flex;gap:6px;align-items:baseline;min-width:0}
+.meta b{flex:none;font-weight:700}
+.blank{flex:1;border-bottom:1px dashed var(--sub);min-height:1.4em;min-width:40px}
+section{display:flex;flex-direction:column;gap:12px}
+h2{margin:0;font-size:18px;font-weight:900;display:flex;gap:10px;align-items:baseline;text-wrap:balance}
+h2 .t{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.04em}
+h3{margin:0;font-size:16px;font-weight:700}
+p{margin:0}
+.say{background:var(--say);border-left:4px solid var(--mint);border-radius:0 10px 10px 0;padding:10px 14px}
+.say::before{content:"읽어 주기";display:block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--mint);margin-bottom:2px}
+.note{background:var(--peach-soft);color:var(--peach-ink);border-radius:10px;padding:10px 14px;font-size:14px}
+.note::before{content:"진행자만 보기 · ";font-weight:700}
+ul.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+ul.check li{display:flex;gap:10px}
+ul.check li::before{content:"";flex:none;width:16px;height:16px;border:1.5px solid var(--sub);border-radius:4px;margin-top:4px}
+.q{display:flex;flex-direction:column;gap:6px}
+.lines{display:flex;flex-direction:column;gap:0}
+.lines i{display:block;border-bottom:1px dashed var(--line);height:30px}
+.task{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.task-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.task-head small{font-size:13px;color:var(--sub)}
+dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;font-size:14px}
+dt{font-weight:700;color:var(--sub)}
+dd{margin:0;min-width:0}
+.obs{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.obs .full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700;color:var(--sub);min-width:0}
+.opts{display:flex;flex-wrap:wrap;gap:6px 14px;font-weight:500;color:var(--ink);font-size:14px}
+.opts span::before{content:"○ ";color:var(--sub)}
+.scale{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-weight:500;color:var(--ink);font-size:13px}
+.scale em{font-style:normal;width:30px;height:30px;border:1.5px solid var(--sub);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-variant-numeric:tabular-nums}
+.scale small{color:var(--sub);font-size:12px}
+.foot{font-size:13px;color:var(--sub);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:520px){.obs{grid-template-columns:1fr}dl{grid-template-columns:1fr}dt{margin-top:4px}}
+</style>
+
+<div class="sheet">
+  <header>
+    <span class="kicker">사용성 평가 · 사람 UT</span>
+    <h1>여기맞캠? 인터뷰지</h1>
+    <div class="meta">
+      <span><b>참가자</b> P<i class="blank"></i></span>
+      <span><b>날짜</b><i class="blank"></i></span>
+      <span><b>진행</b><i class="blank"></i></span>
+      <span><b>기록</b><i class="blank"></i></span>
+    </div>
+    <p style="font-size:13px;color:var(--sub)">참가자마다 한 장씩 써요. 이름은 적지 않고 P1, P2, P3 번호만 적어요. 다 쓰면 <code>ut/notes/P1.md</code> 처럼 옮겨 적어요.</p>
+  </header>
+
+  <section>
+    <h2>시작 전 준비 <span class="t">약 2분</span></h2>
+    <ul class="check">
+      <li>휴대폰(또는 휴대폰 크기 브라우저 창)에 <code>design/prototype.html</code> 을 내 위치 지도(2.1) 화면으로 열어 두기</li>
+      <li>화면 아래 "갈림길 모습 보기"는 진행자용이라 참가자가 누르지 않게 손이나 종이로 가리기</li>
+      <li>참가자 조건 확인: 동의대 가야캠퍼스 학생, 제1인문관에 거의 안 가 봄, 최근 한 학기 안에 건물·강의실을 찾아 헤맨 적 있음, 지도 앱 써 봄</li>
+      <li>우리 팀원이 아니고 이 서비스를 본 적 없는 사람인지 확인</li>
+      <li>시계(걸린 시간 재기), 펜 준비. 진행 1명, 기록 1명</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>1. 인사와 동의 <span class="t">약 2분</span></h2>
+    <p class="say">안녕하세요, 시간 내 주셔서 고마워요. 오늘은 저희가 만든 캠퍼스 길찾기 서비스 '여기맞캠?'을 써 보시는 모습을 볼 거예요. 오늘 평가하는 건 서비스이지 ○○님이 아니에요. 틀린 답은 없고, 헤매셨다면 그건 저희 화면이 고쳐야 할 곳이에요. 20분쯤 걸려요.</p>
+    <p class="say">진행하는 동안 메모를 남겨도 될까요? 이름은 적지 않고 번호로만 기록해요. 중간에 그만두고 싶으면 언제든 말씀해 주세요.</p>
+    <ul class="check"><li>메모 동의 받음</li></ul>
+    <p class="say">화면을 보면서 떠오르는 생각을 그대로 말로 해 주세요. '이게 뭐지?', '여기를 누르면 될 것 같은데' 같은 말이면 돼요. 이 화면은 실제로 걸어 다니며 쓰는 건 아니라서, 걸어가는 장면은 제가 화면을 바꿔서 보여드릴게요. 그때도 실제로 걷고 있다고 생각하고 써 주세요.</p>
+  </section>
+
+  <section>
+    <h2>2. 사전 질문 <span class="t">약 3분</span></h2>
+    <p class="say">시작하기 전에 두 가지만 여쭤볼게요.</p>
+    <div class="q">
+      <h3>Q1. 학교에서 처음 가는 건물이나 강의실을 찾을 때 주로 어떻게 하세요? 지도 앱, 안내판, 주변 사람에게 묻기 중에 무엇을 쓰는지, 왜 그걸 쓰는지 이야기해 주세요.</h3>
+      <div class="lines"><i></i><i></i><i></i></div>
+    </div>
+    <div class="q">
+      <h3>Q2. 건물 안에서 층이나 호수를 헷갈려 헤맨 적이 있나요? 그때 어떻게 하셨어요?</h3>
+      <div class="lines"><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 과제 <span class="t">약 12분</span></h2>
+    <p class="say">이제 상황을 하나씩 읽어 드릴게요. 그 상황이라고 생각하고 화면을 써 주세요.</p>
+    <p class="note">과제 문장은 그대로 읽고, 화면이나 버튼 이름으로 바꿔 말하지 않아요. 도와주지 않고, 막히면 "어떻게 하실 것 같아요?" 만 물어요. 3분 넘게 막히면 "좋아요, 이 과제는 여기까지 할게요" 하고 다음으로 넘어가요. 과제가 끝날 때마다 2.1 화면으로 돌려 놓아요.</p>
+
+    <div class="task">
+      <div class="task-head"><h3>과제 1 · 처음 가는 강의실 찾기</h3><small>시작 2.1 · 예상 5단계</small></div>
+      <p class="say">지천관 앞 로터리 버스정류장에서 막 내렸어요. 다음 수업이 처음 가 보는 제1인문관 401호예요. 사람에게 묻지 않고 강의실까지 가 보세요.</p>
+      <p class="note">"어느 길로 갈까요?" 창이 뜨면 스스로 고르게 둬요. 2.0에서 안내를 다 읽으면 "이제 제1인문관 입구에 도착했어요" 하고 "입구 도착: 자동 전환"을 눌러요 (3초 뒤 층별 지도로 바뀜). 2.2에서 401호까지 가는 길을 말하면 "강의실 앞: 자동 전환"을 눌러요.</p>
+      <dl><dt>성공 기준</dt><dd>2.4 도착 완료 화면에 도착</dd><dt>볼 것</dt><dd>길 고르기 창을 어떻게 받아들이는지, 입구에서 층별 지도로 바뀌는 흐름이 자연스러운지</dd></dl>
+      <div class="obs">
+        <div class="field">결과<div class="opts"><span>성공</span><span>도움받아 성공</span><span>실패</span></div></div>
+        <div class="field">걸린 시간<i class="blank" style="display:block"></i></div>
+        <div class="field">고른 길<div class="opts"><span>중앙도서관 지름길</span><span>수덕전 지름길</span><span>큰길</span></div></div>
+        <div class="field">쉬움 점수<div class="scale"><small>아주 어렵다</small><em>1</em><em>2</em><em>3</em><em>4</em><em>5</em><small>아주 쉽다</small></div></div>
+        <div class="field full">막힌 곳 (화면, 무엇)<div class="lines"><i></i><i></i></div></div>
+        <div class="field full">참가자가 한 말 (그대로)<div class="lines"><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-head"><h3>과제 2 · 가장 빠른 길로 가기</h3><small>시작 1.1 · 예상 3단계</small></div>
+      <p class="say">수업 시간이 빠듯해요. 로터리에서 제1인문관까지 더 빨리 가는 길이 있으면 그 길로 가 보세요. 어떻게 갈지 말로 설명해 주세요.</p>
+      <p class="note">1.1(목적지 확인) 화면에서 시작해요. 참가자가 지름길을 고르고 2.0에서 1번 단계를 읽으면 "이제 그 건물 앞에 왔어요" 하고, 고른 길에 맞춰 "지름길: 도서관 엘리베이터" 또는 "지름길: 수덕전 엘리베이터"를 눌러요.</p>
+      <dl><dt>성공 기준</dt><dd>2.0에서 "중앙도서관(또는 수덕전) 엘리베이터로 5층에 올라가 5층 출입구로 나간다"고 설명함</dd><dt>볼 것</dt><dd>지름길 순서 목록을 보고 길을 이해하는지, 지름길 2개 중 고르기가 쉬운지</dd></dl>
+      <div class="obs">
+        <div class="field">결과<div class="opts"><span>성공</span><span>도움받아 성공</span><span>실패</span></div></div>
+        <div class="field">걸린 시간<i class="blank" style="display:block"></i></div>
+        <div class="field">고른 길<div class="opts"><span>중앙도서관 지름길</span><span>수덕전 지름길</span><span>큰길</span></div></div>
+        <div class="field">쉬움 점수<div class="scale"><small>아주 어렵다</small><em>1</em><em>2</em><em>3</em><em>4</em><em>5</em><small>아주 쉽다</small></div></div>
+        <div class="field full">참가자가 설명한 가는 법 (그대로)<div class="lines"><i></i><i></i></div></div>
+        <div class="field full">막힌 곳 (화면, 무엇)<div class="lines"><i></i><i></i></div></div>
+        <div class="field full">참가자가 한 말 (그대로)<div class="lines"><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-head"><h3>과제 3 · 건물 안에서 강의실 찾기</h3><small>시작 2.1 · 예상 4단계</small></div>
+      <p class="say">제1인문관 1층 입구로 막 들어왔어요. 401호가 몇 층 어디쯤 있는지 찾아서 그 앞까지 가 보세요.</p>
+      <p class="note">시작 전에 1.1을 "갈림길 모습 보기"의 "지금 이 건물" 모습으로 바꿔 둬요. 2.2에서 401호 위치를 말하면 "강의실 앞: 자동 전환"을 눌러요.</p>
+      <dl><dt>성공 기준</dt><dd>"4층, 복도 끝 계단 옆"이라고 말하고 2.4에 도착</dd><dt>볼 것</dt><dd>층별 지도에서 '엘리베이터 내린 곳'과 화살표로 방향을 잡는지, 호실 이름이 없어서 헷갈리는지</dd></dl>
+      <div class="obs">
+        <div class="field">결과<div class="opts"><span>성공</span><span>도움받아 성공</span><span>실패</span></div></div>
+        <div class="field">걸린 시간<i class="blank" style="display:block"></i></div>
+        <div class="field full">참가자가 말한 401호 위치 (그대로)<i class="blank" style="display:block"></i></div>
+        <div class="field">쉬움 점수<div class="scale"><small>아주 어렵다</small><em>1</em><em>2</em><em>3</em><em>4</em><em>5</em><small>아주 쉽다</small></div></div>
+        <div class="field full">막힌 곳 (화면, 무엇)<div class="lines"><i></i><i></i></div></div>
+        <div class="field full">참가자가 한 말 (그대로)<div class="lines"><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+    <p class="say">(과제마다 끝나면) 이 과제는 얼마나 쉬웠나요? 1(아주 어렵다)부터 5(아주 쉽다)까지 골라 주세요.</p>
+  </section>
+
+  <section>
+    <h2>4. 사후 질문 <span class="t">약 3분</span></h2>
+    <p class="say">마지막으로 세 가지만 여쭤볼게요.</p>
+    <div class="q"><h3>Q3. 오늘 써 보면서 가장 헷갈렸던 곳은 어디였나요?</h3><div class="lines"><i></i><i></i><i></i></div></div>
+    <div class="q"><h3>Q4. 가장 좋았던 곳이나 도움이 됐던 곳은 어디였나요?</h3><div class="lines"><i></i><i></i><i></i></div></div>
+    <div class="q"><h3>Q5. 학교에서 길을 찾을 때 이 서비스를 쓸 것 같나요? 왜 그렇게 생각하세요?</h3><div class="lines"><i></i><i></i><i></i></div></div>
+    <p class="say">오늘 정말 고마워요. 말씀해 주신 내용으로 서비스를 고칠게요.</p>
+  </section>
+
+  <section>
+    <h2>5. 그 밖에 본 것</h2>
+    <p style="font-size:14px;color:var(--sub)">표정, 손이 멈춘 곳, 화면을 확대하거나 뒤로 간 곳, 과제와 상관없이 누른 곳</p>
+    <div class="lines"><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <p class="foot">계획 원본: <code>ut/plan.md</code> · 기록 옮길 곳: <code>ut/notes/P1.md</code> ~ <code>P3.md</code> · 다 모이면 <code>/ut-result</code></p>
+</div>
