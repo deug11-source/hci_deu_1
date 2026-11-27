@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>여기맞캠 와이어프레임 1.2 검색 결과 선택</title>
+<style>
+/* wireframe.html 과 같은 토큰과 휴대폰 틀을 그대로 씁니다 */
+:root{
+  --bg:#f2f5f3; --fg:#18251f; --muted:#5f6f67; --line:#cfd8d3;
+  --accent:#23784f; --accent-ink:#fff; --accent-soft:#e1f1e8;
+  --screen:#ffffff; --frame:#18251f; --ph:#eef2ef; --ph-line:#b9c6bf;
+  --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1512; --fg:#e4ede8; --muted:#97a79f; --line:#2f3d36;
+  --accent:#5cc493; --accent-ink:#0b1a12; --accent-soft:#1a3528;
+  --screen:#161e1a; --frame:#55665d; --ph:#1d2621; --ph-line:#3b4a42; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1512; --fg:#e4ede8; --muted:#97a79f; --line:#2f3d36;
+  --accent:#5cc493; --accent-ink:#0b1a12; --accent-soft:#1a3528;
+  --screen:#161e1a; --frame:#55665d; --ph:#1d2621; --ph-line:#3b4a42; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);
+  padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:24px;align-items:center}
+h1{font-size:22px;font-weight:600;color:var(--accent);margin:0}
+.lead{max-width:60ch;color:var(--muted);font-size:14px;line-height:1.7;margin:8px 0 0;text-align:center}
+header{text-align:center}
+
+figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:300px}
+figcaption{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+figcaption b{font-size:14px}
+figcaption span{font-size:12px;color:var(--muted);line-height:1.5}
+
+.phone{width:100%;max-width:300px;aspect-ratio:9/18.5;border:3px solid var(--frame);border-radius:28px;background:var(--screen);
+  display:flex;flex-direction:column;font-size:12px;overflow:hidden;position:relative}
+.status{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding:8px 16px 4px}
+.pad{padding:0 12px;display:flex;flex-direction:column;gap:8px}
+.bar{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;padding:2px 12px 8px}
+.bar small{font-weight:400;color:var(--muted);font-size:11px}
+.sub{color:var(--muted);font-size:11px;line-height:1.45}
+.btn{background:var(--accent);color:var(--accent-ink);border-radius:10px;text-align:center;padding:11px;font-weight:700;font-size:13.5px}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.label{font-size:11px;color:var(--muted)}
+
+/* 결과 목록: 줄 하나를 통째로 누르면 1.1 로 감 */
+.results{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.res{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 10px;border-top:1px solid var(--line);min-height:44px}
+.res:first-child{border-top:0}
+.res .where{font-size:14px;font-weight:700;line-height:1.35}
+.res .go{color:var(--muted);font-size:16px}
+.lv{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:10.5px;font-weight:600;margin-left:4px;vertical-align:1px}
+.lv.b{border-color:var(--fg)}
+.spacer{flex:1}
+
+.notes{border-top:1px solid var(--line);padding-top:16px;max-width:640px;font-size:13px;line-height:1.6;color:var(--muted)}
+.notes b{color:var(--fg)}
+.notes p{margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>1.2 검색 결과 선택</h1>
+    <p class="lead">같은 호수가 여러 건물에 있을 때, 또는 "이 강의실이 맞나요?"에서 "아니에요"를 눌렀을 때 보이는 화면입니다.</p>
+  </header>
+
+  <figure>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="bar"><span>‹ 101호</span><small>검색 결과</small></div>
+      <div class="pad">
+        <div class="results" role="list">
+          <div class="res" role="listitem">
+            <div>
+              <div class="where">13번 건물 · 지하 1층<span class="lv b">지하 B101</span></div>
+              <div class="sub">내 위치에서 약 250 m</div>
+            </div>
+            <span class="go">›</span>
+          </div>
+          <div class="res" role="listitem">
+            <div>
+              <div class="where">13번 건물 · 1층<span class="lv">지상 101</span></div>
+              <div class="sub">내 위치에서 약 250 m</div>
+            </div>
+            <span class="go">›</span>
+          </div>
+          <div class="res" role="listitem">
+            <div>
+              <div class="where">26번 건물 · 1층<span class="lv">지상 101</span></div>
+              <div class="sub">내 위치에서 약 380 m</div>
+            </div>
+            <span class="go">›</span>
+          </div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="pad" style="padding-bottom:16px">
+        <div class="label" style="text-align:center">찾는 강의실이 없나요?</div>
+        <div class="btn ghost">다시 검색</div>
+      </div>
+    </div>
+    <figcaption><b>1.2 검색 결과 선택</b><span>결과마다 어느 건물 몇 층인지 먼저 보여주고, 지하와 지상을 구분합니다. 줄을 누르면 목적지 확인(1.1)으로 갑니다.</span></figcaption>
+  </figure>
+
+  <section class="notes" aria-label="설계 메모">
+    <p><b>들어오는 곳.</b> 내 위치 지도(2.1)에서 같은 호수가 여러 건물에 있을 때, 목적지 확인(1.1)의 "이 강의실이 맞나요?"에서 "아니에요"를 눌렀을 때.</p>
+    <p><b>나가는 곳.</b> 결과 줄 → 목적지 확인(1.1). ‹ 뒤로 → 내 위치 지도(2.1). 다시 검색 → 내 위치 지도(2.1) 검색창.</p>
+    <p><b>예시 표기.</b> 건물 번호, 층, 거리는 구성을 보여주기 위한 예시이며 실제 데이터가 아닙니다.</p>
+  </section>
+</div>
+</body>
+</html>
